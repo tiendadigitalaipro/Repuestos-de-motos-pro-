@@ -18,6 +18,7 @@
   --warn:#ff9800;--warn-dim:rgba(255,152,0,0.12);
   --text:#e8eaed;--text2:#9aa0a6;--text3:#5f6368;
   --mono:'JetBrains Mono',monospace;--body:'Inter',sans-serif;
+  --blue:#2196F3;--blue-dim:rgba(33,150,243,0.12);
   --radius:12px;--radius-sm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -199,6 +200,23 @@ input,select,textarea,button{font-family:var(--body)}
 #toast.err{border-color:rgba(244,67,54,0.3);color:var(--red)}
 #toast.warn{border-color:var(--border-orange);color:var(--orange)}
 
+/* ═══ LICENSE ACTION BUTTONS ═══ */
+.license-actions{display:flex;gap:4px;padding:10px 18px;border-top:1px solid var(--border);background:rgba(0,0,0,0.1)}
+.license-actions .btn-icon-action{width:30px;height:30px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+.license-actions .btn-activate{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.license-actions .btn-activate:hover{background:rgba(76,175,80,0.25)}
+.license-actions .btn-block{background:var(--red-dim);color:var(--red);border:1px solid rgba(244,67,54,0.3)}
+.license-actions .btn-block:hover{background:rgba(244,67,54,0.25)}
+.license-actions .btn-pause{background:var(--orange-dim);color:var(--orange);border:1px solid var(--border-orange)}
+.license-actions .btn-pause:hover{background:rgba(255,107,53,0.25)}
+.license-actions .btn-share{background:var(--card);color:var(--blue);border:1px solid var(--border)}
+.license-actions .btn-share:hover{border-color:var(--blue)}
+.license-actions .btn-delete{background:var(--red-dim);color:var(--red);border:1px solid rgba(244,67,54,0.3)}
+.license-actions .btn-delete:hover{background:rgba(244,67,54,0.25)}
+.status-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.status-badge.bloqueada{background:var(--red-dim);color:var(--red);border:1px solid rgba(244,67,54,0.3)}
+.status-badge.pausada{background:var(--orange-dim);color:var(--orange);border:1px solid var(--border-orange)}
+
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:900px){
   .stats-row{grid-template-columns:repeat(3,1fr)}
@@ -307,18 +325,41 @@ input,select,textarea,button{font-family:var(--body)}
           <span class="badge-type">5 DÍAS</span>
         </div>
         <p class="panel-desc">
-          El código DEMO permite al cliente usar la app por <strong>exactamente 5 días</strong>.
+          El código DEMO permite al cliente usar la app por un tiempo limitado de prueba.
           Al vencer, la app se bloquea y solicita licencia PRO. No se puede extender ni reutilizar.
         </p>
-        <div class="form-group">
-          <label class="form-label">Nota interna (opcional)</label>
-          <input type="text" id="demo-nota" class="form-input" placeholder="Nombre del prospecto, fecha...">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nombre del Negocio <span class="required">*</span></label>
+            <input type="text" id="demo-negocio" class="form-input" placeholder="Ej: Motorex Colombia" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono / WhatsApp <span class="required">*</span></label>
+            <input type="tel" id="demo-telefono" class="form-input" placeholder="+57 300 123 4567" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">ID Dispositivo</label>
+            <input type="text" id="demo-device" class="form-input mono" placeholder="RMP-XXXX-XXXX-XXXX (opcional)" oninput="this.value=this.value.toUpperCase()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Días de Prueba</label>
+            <select id="demo-dias" class="form-select">
+              <option value="3">3 días</option>
+              <option value="5" selected>5 días</option>
+              <option value="7">7 días</option>
+              <option value="10">10 días</option>
+              <option value="15">15 días</option>
+            </select>
+          </div>
         </div>
         <button class="btn btn-orange btn-block btn-lg" onclick="generarDEMO()">
           <i class="fas fa-flask"></i> Generar Código DEMO
         </button>
         <div class="result-box demo-result" id="result-demo">
-          <div style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:8px">
+          <div class="result-client-info" id="result-demo-client-info"></div>
+          <div id="result-demo-dias-label" style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:8px">
             <i class="fas fa-clock"></i> Expira 5 días después de ser activado por el cliente.
           </div>
           <div class="result-code" id="result-demo-code">RMP-DEMO-XXXXXX-XXXX</div>
@@ -450,6 +491,8 @@ var ADMIN_PW_DEFAULT = 'RMP2026ADMIN';
 var DB_KEY = 'rmp_licencias_admin';
 var SYNC_KEY = 'rmp_licencias_generadas';
 var DEMO_DAYS = 5;
+var _loggedIn = false;
+var _lastDemo = null;
 
 /* ═══════════════════════════════════════════
    UTILITIES
@@ -655,13 +698,24 @@ function renderDeviceFields() {
    GENERATE DEMO
    ═══════════════════════════════════════════ */
 function generarDEMO() {
-  var nota = (document.getElementById('demo-nota').value || '').trim();
+  var negocio = (document.getElementById('demo-negocio').value || '').trim();
+  var telefono = (document.getElementById('demo-telefono').value || '').trim();
+  var device = (document.getElementById('demo-device').value || '').trim();
+  var dias = parseInt(document.getElementById('demo-dias').value) || 5;
+
+  // Validate required
+  if (!negocio) { toast('El nombre del negocio es obligatorio', 'err'); return; }
+  if (!telefono) { toast('El teléfono / WhatsApp es obligatorio', 'err'); return; }
+
   var code = _generateDemoCode();
   var entry = {
     id: _uid(),
     code: code,
     tipo: 'DEMO',
-    nota: nota,
+    negocio: negocio,
+    telefono: telefono,
+    device: device,
+    dias: dias,
     activada: false,
     ts: Date.now()
   };
@@ -672,11 +726,27 @@ function generarDEMO() {
   saveDB(db);
   syncFlatList(db);
 
+  // Show result with client info
+  var clientInfo = '<strong>' + _esc(negocio) + '</strong>';
+  if (telefono) clientInfo += ' · ' + _esc(telefono);
+  if (device) clientInfo += '<br><span style="color:var(--text3)"><i class="fas fa-microchip"></i> ' + _esc(device) + '</span>';
+  clientInfo += '<br><span style="color:var(--orange)">⏰ ' + dias + ' días de prueba</span>';
+  document.getElementById('result-demo-client-info').innerHTML = clientInfo;
   document.getElementById('result-demo-code').textContent = code;
+  document.getElementById('result-demo-dias-label').innerHTML = '<i class="fas fa-clock"></i> Expira ' + dias + ' días después de ser activado por el cliente.';
   document.getElementById('result-demo').style.display = 'block';
-  document.getElementById('demo-nota').value = '';
+
+  // Clear form
+  document.getElementById('demo-negocio').value = '';
+  document.getElementById('demo-telefono').value = '';
+  document.getElementById('demo-device').value = '';
+  document.getElementById('demo-dias').value = '5';
+
+  // Store last generated for WhatsApp sharing
+  _lastDemo = entry;
+
   renderStats();
-  toast('Código DEMO generado', 'ok');
+  toast('Código DEMO generado (' + dias + ' días)', 'ok');
 }
 
 /* ═══════════════════════════════════════════
@@ -847,11 +917,19 @@ function renderLista() {
       });
       var statusIcons = statuses.join('');
 
+      // Status badge
+      var statusBadge = '';
+      if (client.bloqueada) {
+        statusBadge = ' <span class="status-badge bloqueada">BLOQUEADA</span>';
+      } else if (client.pausada) {
+        statusBadge = ' <span class="status-badge pausada">PAUSADA</span>';
+      }
+
       html += '<div class="client-card" id="client-' + cIdx + '">' +
         '<div class="client-card-header" onclick="toggleCard(' + cIdx + ')">' +
         '<span class="cc-icon"><i class="fas fa-store"></i></span>' +
         '<div class="cc-info">' +
-        '<div class="cc-negocio">' + _esc(client.negocio) + '</div>' +
+        '<div class="cc-negocio">' + _esc(client.negocio) + statusBadge + '</div>' +
         '<div class="cc-meta">' +
         '<span><i class="fas fa-phone"></i> ' + _esc(client.telefono) + '</span>' +
         '<span><i class="fas fa-clock"></i> ' + _formatDuration(client.duracion) + '</span>' +
@@ -905,8 +983,12 @@ function renderLista() {
       });
 
       html += '</div></div>' +
-        '<div class="client-card-footer">' +
-        '<button class="btn btn-danger btn-sm" onclick="eliminarCliente(' + realIdx + ')"><i class="fas fa-trash-alt"></i> Eliminar</button>' +
+        '<div class="license-actions">' +
+        '<button class="btn-icon-action btn-activate" onclick="setBlockClient(' + realIdx + ',false);event.stopPropagation()" title="Activar"><i class="fas fa-check"></i></button>' +
+        '<button class="btn-icon-action btn-block" onclick="setBlockClient(' + realIdx + ',true);event.stopPropagation()" title="Bloquear"><i class="fas fa-ban"></i></button>' +
+        '<button class="btn-icon-action btn-pause" onclick="togglePauseClient(' + realIdx + ');event.stopPropagation()" title="Pausar"><i class="fas fa-pause"></i></button>' +
+        '<button class="btn-icon-action btn-share" onclick="shareWhatsAppCliente(' + realIdx + ');event.stopPropagation()" title="Compartir por WhatsApp"><i class="fab fa-whatsapp"></i></button>' +
+        '<button class="btn-icon-action btn-delete" onclick="eliminarCliente(' + realIdx + ');event.stopPropagation()" title="Eliminar"><i class="fas fa-trash-alt"></i></button>' +
         '</div></div>';
     });
   }
@@ -917,13 +999,16 @@ function renderLista() {
     demos.forEach(function (d, dIdx) {
       var realIdx = demos.length - 1 - dIdx;
       var fecha = new Date(d.ts).toLocaleDateString('es-VE', { day: '2-digit', month: 'short' });
+      var displayNote = d.negocio ? _esc(d.negocio) + (d.telefono ? ' · ' + _esc(d.telefono) : '') : _esc(d.nota || '—');
+      var diasLabel = d.dias ? ' (' + d.dias + 'd)' : '';
       html += '<div class="demo-row">' +
-        '<span class="dr-badge">DEMO</span>' +
+        '<span class="dr-badge">DEMO' + diasLabel + '</span>' +
         '<span class="dr-code">' + _esc(d.code) + '</span>' +
-        '<span class="dr-note">' + _esc(d.nota || '—') + '</span>' +
+        '<span class="dr-note">' + displayNote + '</span>' +
         '<span class="dr-date">' + fecha + '</span>' +
         '<span class="dr-actions">' +
         '<button class="terminal-copy-btn" onclick="copiarTexto(\'' + d.code + '\',this)" title="Copiar"><i class="fas fa-copy"></i></button>' +
+        '<button class="terminal-copy-btn" onclick="shareWhatsAppDemo(' + realIdx + ')" title="Compartir por WhatsApp" style="color:var(--blue)"><i class="fab fa-whatsapp"></i></button>' +
         '<button class="btn btn-danger btn-sm" onclick="eliminarDemo(' + realIdx + ')" title="Eliminar" style="padding:4px 8px"><i class="fas fa-trash-alt"></i></button>' +
         '</span></div>';
     });
@@ -935,6 +1020,85 @@ function renderLista() {
 function toggleCard(idx) {
   var card = document.getElementById('client-' + idx);
   if (card) card.classList.toggle('expanded');
+}
+
+/* ═══════════════════════════════════════════
+   LICENSE ACTIONS
+   ═══════════════════════════════════════════ */
+function setBlockClient(idx, block) {
+  var db = getDB();
+  var client = db.clients[idx];
+  if (!client) return;
+  client.bloqueada = !!block;
+  if (block) client.pausada = false; // blocked takes priority
+  saveDB(db);
+  renderLista();
+  toast(block ? 'Cliente bloqueado' : 'Cliente activado', block ? 'err' : 'ok');
+}
+
+function toggleBlockClient(idx) {
+  var db = getDB();
+  var client = db.clients[idx];
+  if (!client) return;
+  client.bloqueada = !client.bloqueada;
+  if (client.bloqueada) client.pausada = false;
+  saveDB(db);
+  renderLista();
+  toast(client.bloqueada ? 'Cliente bloqueado' : 'Cliente activado', client.bloqueada ? 'err' : 'ok');
+}
+
+function togglePauseClient(idx) {
+  var db = getDB();
+  var client = db.clients[idx];
+  if (!client) return;
+  client.pausada = !client.pausada;
+  if (client.pausada) client.bloqueada = false; // paused takes priority when pausing
+  saveDB(db);
+  renderLista();
+  toast(client.pausada ? 'Licencia pausada' : 'Licencia reanudada', 'warn');
+}
+
+function shareWhatsAppCliente(idx) {
+  var db = getDB();
+  var client = db.clients[idx];
+  if (!client) return;
+  var codes = [];
+  (client.dispositivos || []).forEach(function (d, i) {
+    if (d.code) codes.push('📱 Terminal ' + (i + 1) + ': ' + d.code);
+  });
+  var statusStr = '';
+  if (client.bloqueada) statusStr = '🔴 *BLOQUEADA*\n';
+  else if (client.pausada) statusStr = '⏸️ *PAUSADA*\n';
+
+  var msg = '🏍️ *Repuestos de Motos Pro — Licencia PRO*\n\n' +
+    '👤 *' + (client.negocio || 'N/A') + '*\n';
+  if (client.telefono) msg += '📞 ' + client.telefono + '\n';
+  msg += statusStr +
+    '⏰ Duración: ' + _formatDuration(client.duracion) + '\n\n' +
+    '🔑 Código(s) de activación:\n\n' +
+    (codes.join('\n') || 'Sin códigos asignados') + '\n\n' +
+    '¿Necesitas ayuda? Escríbenos. 🏍️';
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function shareWhatsAppDemo(idx) {
+  var db = getDB();
+  var demos = db.demos || [];
+  var d = demos[idx];
+  if (!d) return;
+  var dias = d.dias || 5;
+  var negocio = d.negocio || '';
+  var msg = '🏍️ *Repuestos de Motos Pro*\n\n';
+  if (negocio) msg += '👤 *' + negocio + '*\n';
+  if (d.telefono) msg += '📞 ' + d.telefono + '\n';
+  msg += '🔑 *' + d.code + '*\n\n' +
+    '⏰ Válido por ' + dias + ' días desde su activación.\n\n' +
+    '📌 Cómo activar:\n' +
+    '1. Abre la app Repuestos de Motos Pro\n' +
+    '2. Pega el código en el campo de licencia\n' +
+    '3. Presiona "Activar"\n\n' +
+    '¿Necesitas ayuda? Escríbenos. 🏍️';
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ═══════════════════════════════════════════
@@ -1019,11 +1183,19 @@ function copiarTodosPro() {
    ═══════════════════════════════════════════ */
 function enviarWhatsAppDemo() {
   var code = document.getElementById('result-demo-code').textContent;
-  var msg = '🏍️ *Repuestos de Motos Pro*\n\n' +
-    '¡Hola! Aquí está tu código de prueba:\n\n' +
-    '*' + code + '*\n\n' +
-    '⏰ Válido por 5 días desde su activación.\n\n' +
-    '🔑 Cómo activar:\n' +
+  var clientInfoEl = document.getElementById('result-demo-client-info');
+  var negocio = '', telefono = '';
+  if (_lastDemo) {
+    negocio = _lastDemo.negocio || '';
+    telefono = _lastDemo.telefono || '';
+  }
+  var dias = _lastDemo ? (_lastDemo.dias || 5) : 5;
+  var msg = '🏍️ *Repuestos de Motos Pro*\n\n';
+  if (negocio) msg += '👤 *' + negocio + '*\n';
+  msg += '¡Hola! Aquí está tu código de prueba:\n\n' +
+    '🔑 *' + code + '*\n\n' +
+    '⏰ Válido por ' + dias + ' días desde su activación.\n\n' +
+    '📌 Cómo activar:\n' +
     '1. Abre la app Repuestos de Motos Pro\n' +
     '2. Pega el código en el campo de licencia\n' +
     '3. Presiona "Activar"\n\n' +
