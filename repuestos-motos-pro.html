@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Repuestos de Motos Pro — A2K Digital Studio</title>
+<link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--bg:#0a0e14;--bg2:#131a24;--bg3:#1a2332;--card:rgba(255,255,255,0.04);--border:rgba(255,107,53,0.15);--border2:rgba(255,255,255,0.08);--orange:#ff6b35;--orange2:#ff8c5a;--blue:#2196F3;--gold:#ffc107;--success:#4caf50;--danger:#f44336;--warn:#ff9800;--fuchsia:#e040fb;--text:#e8eaed;--text2:#9aa0a6;--text3:#5f6368;--mono:'JetBrains Mono',monospace;--body:'Inter',sans-serif;--radius:10px;--shadow:0 4px 20px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--text3);border-radius:3px}
+a{color:var(--blue);text-decoration:none}
+input,select,textarea{font-family:var(--body)}
+
+/* LOGIN SCREEN */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0e14 0%,#131a24 50%,#1a1014 100%);padding:16px}
+.login-container{width:100%;max-width:400px}
+.login-logo{text-align:center;margin-bottom:16px}
+.login-logo-icon{font-size:64px;display:block;margin-bottom:8px;filter:drop-shadow(0 0 30px rgba(255,107,53,0.5))}
+.login-title{font-size:24px;font-weight:800;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.login-sub{text-align:center;font-size:12px;color:var(--text3);margin-top:2px;letter-spacing:1px}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
+.form-group{margin-bottom:14px}
+.form-label{font-size:10px;color:var(--text2);margin-bottom:5px;display:block;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.form-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--orange)}
+.form-input.mono{font-family:var(--mono);letter-spacing:1px;text-align:center}
+select.form-input{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239aa0a6'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+select.form-input option{background:var(--bg2);color:var(--text)}
+.btn{padding:10px 18px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:13px;transition:all .2s;font-family:var(--body);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,var(--orange),#ff8c00);color:#fff}.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text2)}.btn-secondary:hover{border-color:var(--orange);color:var(--orange)}
+.btn-danger{background:rgba(244,67,54,0.15);border:1px solid var(--danger);color:var(--danger)}.btn-danger:hover{background:rgba(244,67,54,0.25)}
+.btn-success{background:rgba(76,175,80,0.15);border:1px solid var(--success);color:var(--success)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#ff9800);color:#000}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-sm{padding:5px 10px;font-size:11px;border-radius:6px}
+.btn-block{width:100%}
+.btn-lg{padding:14px 24px;font-size:15px;border-radius:10px}
+.device-box{background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:10px;padding:10px 14px;margin:10px 0;text-align:center}
+.device-label{font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:3px}
+.device-id{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--orange);letter-spacing:2px}
+.divider{height:1px;background:var(--border2);margin:14px 0;display:flex;align-items:center;justify-content:center}
+.divider span{background:var(--bg2);padding:0 12px;font-size:11px;color:var(--text3)}
+.msg-box{font-size:12px;margin-top:10px;text-align:center;line-height:1.5;min-height:20px}
+
+/* SIDEBAR */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
+.sidebar-overlay.show{display:block}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--bg2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;transition:transform .3s}
+.sidebar-logo{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.sidebar-logo-icon{font-size:32px}
+.sidebar-logo-text{font-size:15px;font-weight:800;color:var(--text)}
+.sidebar-logo-sub{font-size:10px;color:var(--text3);letter-spacing:1px}
+.sidebar-nav{flex:1;overflow-y:auto;padding:12px 0}
+.nav-section-label{font-size:10px;color:var(--text3);letter-spacing:1.5px;font-weight:700;padding:10px 20px 4px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:600;transition:all .15s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,0.03);color:var(--text)}
+.nav-item.active{color:var(--orange);background:rgba(255,107,53,0.08);border-left-color:var(--orange)}
+.nav-item i{width:18px;text-align:center;font-size:14px}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);text-align:center}
+
+/* MAIN CONTENT */
+.app-container{display:flex;min-height:100vh}
+.main-content{flex:1;margin-left:250px;min-height:100vh}
+.top-bar{position:sticky;top:0;z-index:50;background:rgba(10,14,20,0.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.top-bar-left{display:flex;align-items:center;gap:12px}
+.menu-toggle{display:none;background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer}
+.top-bar-title{font-size:16px;font-weight:700;color:var(--text)}
+.top-bar-right{display:flex;align-items:center;gap:12px}
+.content-area{padding:24px}
+.section{display:none}.section.active{display:block}
+
+/* STATS CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:18px;transition:all .2s}
+.stat-card:hover{border-color:var(--border)}
+.stat-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.stat-value{font-size:24px;font-weight:800;font-family:var(--mono)}
+.stat-label{font-size:12px;color:var(--text2);margin-top:4px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.card-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card-title i{color:var(--orange)}
+
+/* TABLE */
+.table-container{overflow-x:auto;border-radius:var(--radius)}
+table.data-table{width:100%;border-collapse:collapse;font-size:13px}
+table.data-table th{padding:10px 14px;text-align:left;color:var(--text2);font-size:11px;letter-spacing:.5px;border-bottom:1px solid var(--border2);font-weight:700;text-transform:uppercase;white-space:nowrap}
+table.data-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.03);vertical-align:middle}
+table.data-table tr:hover td{background:rgba(255,255,255,0.02)}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.badge-orange{background:rgba(255,107,53,0.15);color:var(--orange);border:1px solid rgba(255,107,53,0.3)}
+.badge-green{background:rgba(76,175,80,0.15);color:var(--success);border:1px solid rgba(76,175,80,0.3)}
+.badge-red{background:rgba(244,67,54,0.15);color:var(--danger);border:1px solid rgba(244,67,54,0.3)}
+.badge-blue{background:rgba(33,150,243,0.15);color:var(--blue);border:1px solid rgba(33,150,243,0.3)}
+.badge-gold{background:rgba(255,193,7,0.15);color:var(--gold);border:1px solid rgba(255,193,7,0.3)}
+
+/* POS LAYOUT */
+.pos-layout{display:grid;grid-template-columns:1fr 380px;gap:16px;height:calc(100vh - 130px)}
+.pos-products{display:flex;flex-direction:column;overflow:hidden}
+.pos-search{display:flex;gap:8px;margin-bottom:12px}
+.pos-search input{flex:1}
+.pos-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pos-cat-btn{padding:6px 12px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:11px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.pos-cat-btn:hover,.pos-cat-btn.active{background:rgba(255,107,53,0.15);border-color:var(--orange);color:var(--orange)}
+.pos-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;padding-bottom:20px}
+.pos-item{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:12px;cursor:pointer;transition:all .15s}
+.pos-item:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,107,53,0.1)}
+.pos-item-name{font-size:12px;font-weight:700;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pos-item-model{font-size:10px;color:var(--text3);margin-bottom:6px}
+.pos-item-price{font-size:14px;font-weight:800;color:var(--orange);font-family:var(--mono)}
+.pos-item-price-bs{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.pos-item-stock{font-size:10px;margin-top:4px}
+.pos-cart{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;overflow:hidden;height:100%}
+.pos-cart-header{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.pos-cart-header h3{font-size:14px;display:flex;align-items:center;gap:8px}
+.pos-cart-items{flex:1;overflow-y:auto;padding:8px}
+.cart-item{display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-price{font-size:11px;color:var(--text2);font-family:var(--mono)}
+.cart-item-qty{display:flex;align-items:center;gap:4px}
+.cart-item-qty button{width:24px;height:24px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+.cart-item-qty button:hover{border-color:var(--orange);color:var(--orange)}
+.cart-item-qty span{font-size:13px;font-weight:700;min-width:20px;text-align:center;font-family:var(--mono)}
+.cart-item-subtotal{font-size:13px;font-weight:700;color:var(--orange);font-family:var(--mono);min-width:60px;text-align:right}
+.cart-item-remove{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;padding:4px}
+.cart-item-remove:hover{color:var(--danger)}
+.pos-cart-footer{padding:16px;border-top:1px solid var(--border)}
+.cart-totals{margin-bottom:12px}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px}
+.cart-total-row.final{font-size:18px;font-weight:800;color:var(--orange)}
+.cart-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:24px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+
+/* CHECKOUT MODAL */
+.checkout-items{margin-bottom:16px}
+.checkout-item{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.03)}
+.checkout-item span:last-child{font-family:var(--mono)}
+.payment-methods{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}
+.pay-method-btn{padding:14px;border-radius:10px;border:2px solid var(--border2);background:var(--card);cursor:pointer;transition:all .15s;text-align:center}
+.pay-method-btn:hover{border-color:var(--orange)}
+.pay-method-btn.selected{border-color:var(--orange);background:rgba(255,107,53,0.1)}
+.pay-method-btn i{font-size:20px;display:block;margin-bottom:6px;color:var(--orange)}
+.pay-method-btn span{font-size:11px;font-weight:700;color:var(--text2)}
+
+/* RECEIPT */
+.receipt{background:#fff;color:#000;padding:20px;max-width:320px;margin:0 auto;font-size:12px;font-family:'Courier New',monospace}
+.receipt-header{text-align:center;border-bottom:1px dashed #333;padding-bottom:10px;margin-bottom:10px}
+.receipt-items{margin:10px 0}
+.receipt-item{display:flex;justify-content:space-between;margin-bottom:2px}
+.receipt-total{border-top:1px dashed #333;padding-top:10px;margin-top:10px}
+.receipt-footer{text-align:center;margin-top:10px;font-size:10px;color:#666}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;max-width:360px;box-shadow:var(--shadow)}
+#toast.show{opacity:1}
+#toast.ok{border-color:var(--success);color:var(--success)}
+#toast.err{border-color:var(--danger);color:var(--danger)}
+#toast.warn{border-color:var(--warn);color:var(--warn)}
+
+/* MISC */
+.empty-state{text-align:center;padding:40px;color:var(--text3);font-size:13px}
+.search-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.search-bar input,.search-bar select{flex:1;min-width:150px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.text-orange{color:var(--orange)}.text-green{color:var(--success)}.text-red{color:var(--danger)}.text-gold{color:var(--gold)}.text-blue{color:var(--blue)}.text-muted{color:var(--text3)}
+.text-right{text-align:right}.text-center{text-align:center}
+.font-mono{font-family:var(--mono)}.fw700{font-weight:700}.fw800{font-weight:800}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mb-8{margin-bottom:8px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}
+.flex{display:flex}.flex-wrap{flex-wrap:wrap}.gap-8{gap:8px}.gap-16{gap:16px}.items-center{align-items:center}.justify-between{justify-content:space-between}
+.moto-brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.moto-brand-card{background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:14px;cursor:pointer;transition:all .15s}
+.moto-brand-card:hover{border-color:var(--orange);transform:translateY(-2px)}
+.moto-brand-card h4{font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.moto-brand-card .count{font-size:11px;color:var(--text3)}
+
+/* PRINT */
+@media print{body *{visibility:hidden}.receipt,.receipt *{visibility:visible}.receipt{position:absolute;left:0;top:0;width:100%}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .pos-layout{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .pos-cart{height:400px}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-left:0}
+  .menu-toggle{display:block}
+  .content-area{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .payment-methods{grid-template-columns:repeat(2,1fr)}
+  .pos-layout{grid-template-columns:1fr;height:auto}
+  .pos-cart{height:350px}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .payment-methods{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     LOGIN / LICENSE SCREEN
+══════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-container">
+    <div class="login-logo">
+      <span class="login-logo-icon">🏍️</span>
+      <div class="login-title">Repuestos de Motos Pro</div>
+      <div class="login-sub">A2K DIGITAL STUDIO</div>
+    </div>
+    <div class="login-card">
+
+      <!-- REGISTER -->
+      <div id="lock-register" style="display:none">
+        <div style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px;line-height:1.6;padding:8px;background:rgba(255,107,53,0.06);border-radius:8px;border:1px solid rgba(255,107,53,0.15)">
+          👋 Primera vez aquí. Registra tu negocio para comenzar.
+        </div>
+        <div class="form-group">
+          <label class="form-label">NOMBRE DEL NEGOCIO</label>
+          <input type="text" id="reg-negocio" class="form-input" placeholder="Ej: Moto Repuestos El Valle" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">TELÉFONO DEL NEGOCIO</label>
+          <input type="tel" id="reg-telefono" class="form-input" placeholder="+58 412-1234567">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CORREO ELECTRÓNICO</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="two-col">
+          <div class="form-group">
+            <label class="form-label">USUARIO</label>
+            <input type="text" id="reg-usuario" class="form-input" placeholder="Usuario" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CONTRASEÑA</label>
+            <input type="password" id="reg-pw" class="form-input" placeholder="Mín 4 caracteres">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CONFIRMAR CONTRASEÑA</label>
+          <input type="password" id="reg-pw2" class="form-input" placeholder="Repite la contraseña">
+        </div>
+        <div class="device-box">
+          <div class="device-label">ID DE ESTE DISPOSITIVO</div>
+          <div id="lock-device-id" class="device-id">cargando...</div>
+          <button onclick="copiarDeviceId('lock-device-id')" style="margin-top:5px;background:none;border:1px solid rgba(255,107,53,0.3);color:var(--text2);padding:3px 10px;border-radius:6px;cursor:pointer;font-size:11px">📋 Copiar Device ID</button>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">Comparte este ID para obtener tu licencia PRO</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CÓDIGO DE LICENCIA</label>
+          <input type="text" id="reg-lic" class="form-input mono" placeholder="RMP-PRO-XXXXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="divider"><span>o sin código</span></div>
+        <button class="btn btn-secondary btn-block mb-8" onclick="usarDemoRegistro()">🎯 Prueba gratuita 5 días</button>
+        <button class="btn btn-primary btn-block btn-lg" onclick="registrarCuenta()">✅ Crear Cuenta y Activar</button>
+        <div id="reg-msg" class="msg-box"></div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="lock-login" style="display:none">
+        <div id="login-negocio-name" style="font-size:16px;font-weight:700;color:var(--orange);text-align:center;margin-bottom:4px">—</div>
+        <div id="login-lic-info" style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:14px"></div>
+        <div class="device-box">
+          <div class="device-label">ID DE ESTE DISPOSITIVO</div>
+          <div id="lock-device-id-login" class="device-id">-</div>
+          <button onclick="copiarDeviceId('lock-device-id-login')" style="margin-top:4px;background:none;border:1px solid rgba(255,107,53,0.3);color:var(--text2);padding:2px 10px;border-radius:6px;cursor:pointer;font-size:10px">📋 Copiar</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">USUARIO</label>
+          <input type="text" id="login-usuario" class="form-input" placeholder="Tu usuario" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CONTRASEÑA</label>
+          <input type="password" id="login-pw" class="form-input" placeholder="Tu contraseña" onkeydown="if(event.key==='Enter')iniciarSesion()">
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" onclick="iniciarSesion()">🔓 Iniciar Sesión</button>
+        <div id="login-msg" class="msg-box"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     APP PRINCIPAL
+══════════════════════════════════════════ -->
+<div id="app" style="display:none">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-icon">🏍️</span>
+      <div>
+        <div class="sidebar-logo-text">Repuestos de Motos Pro</div>
+        <span class="sidebar-logo-sub">A2K Digital Studio</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" onclick="navigate('dashboard')" data-nav="dashboard"><i class="fas fa-chart-line"></i> Dashboard</div>
+      <div class="nav-item" onclick="navigate('pos')" data-nav="pos"><i class="fas fa-cash-register"></i> Punto de Venta</div>
+      <div class="nav-section-label">Gestión</div>
+      <div class="nav-item" onclick="navigate('inventario')" data-nav="inventario"><i class="fas fa-boxes-stacked"></i> Inventario</div>
+      <div class="nav-item" onclick="navigate('clientes')" data-nav="clientes"><i class="fas fa-users"></i> Clientes</div>
+      <div class="nav-item" onclick="navigate('ventas')" data-nav="ventas"><i class="fas fa-receipt"></i> Ventas</div>
+      <div class="nav-item" onclick="navigate('motos')" data-nav="motos"><i class="fas fa-motorcycle"></i> Marcas / Modelos</div>
+      <div class="nav-section-label">Finanzas</div>
+      <div class="nav-item" onclick="navigate('caja')" data-nav="caja"><i class="fas fa-vault"></i> Caja</div>
+      <div class="nav-item" onclick="navigate('reportes')" data-nav="reportes"><i class="fas fa-chart-bar"></i> Reportes</div>
+      <div class="nav-section-label">Sistema</div>
+      <div class="nav-item" onclick="navigate('config')" data-nav="config"><i class="fas fa-gear"></i> Configuración</div>
+    </nav>
+    <div class="sidebar-footer" id="sidebar-lic">—</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="top-bar-title" id="top-bar-title"><i class="fas fa-chart-line text-orange"></i> Dashboard</div>
+      </div>
+      <div class="top-bar-right">
+        <span class="font-mono" style="font-size:11px;color:var(--text3)">Tasa: <span id="tasa-display" class="text-orange">0.00</span> Bs/$</span>
+        <button class="btn btn-sm btn-secondary" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> Salir</button>
+      </div>
+    </div>
+
+    <div class="content-area">
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <div id="sec-dashboard" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(255,107,53,0.12);color:var(--orange)"><i class="fas fa-dollar-sign"></i></div>
+            <div class="stat-value text-orange" id="dash-ventas-usd">$0.00</div>
+            <div class="stat-label">Ventas del Día (USD)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(76,175,80,0.12);color:var(--success)"><i class="fas fa-bolivar-sign"></i></div>
+            <div class="stat-value text-green" id="dash-ventas-bs">Bs 0.00</div>
+            <div class="stat-label">Ventas del Día (Bs)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(33,150,243,0.12);color:var(--blue)"><i class="fas fa-box"></i></div>
+            <div class="stat-value text-blue" id="dash-productos">0</div>
+            <div class="stat-label">Productos en Stock</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(244,67,54,0.12);color:var(--danger)"><i class="fas fa-triangle-exclamation"></i></div>
+            <div class="stat-value text-red" id="dash-alertas">0</div>
+            <div class="stat-label">Alertas de Stock</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fas fa-trophy"></i> Más Vendidos</div></div>
+            <div id="dash-top-vendidos"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fas fa-clock-rotate-left"></i> Últimas Ventas</div></div>
+            <div id="dash-ultimas-ventas"></div>
+          </div>
+        </div>
+        <div class="card mt-16" id="dash-alertas-card" style="display:none">
+          <div class="card-header"><div class="card-title"><i class="fas fa-triangle-exclamation text-red"></i> Productos con Stock Bajo</div></div>
+          <div id="dash-alertas-list"></div>
+        </div>
+      </div>
+
+      <!-- ═══ POS ═══ -->
+      <div id="sec-pos" class="section">
+        <div class="pos-layout">
+          <div class="pos-products">
+            <div class="pos-search">
+              <input type="text" id="pos-buscar" class="form-input" placeholder="🔍 Buscar por nombre, código o modelo..." oninput="filtrarPOSProductos()">
+              <button class="btn btn-secondary btn-sm" onclick="filtrarPOSProductos()"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="pos-cats" id="pos-categorias"></div>
+            <div class="pos-grid" id="pos-productos-grid"></div>
+          </div>
+          <div class="pos-cart">
+            <div class="pos-cart-header">
+              <h3><i class="fas fa-shopping-cart text-orange"></i> Carrito (<span id="cart-count">0</span>)</h3>
+              <button class="btn btn-sm btn-danger" onclick="vaciarCarrito()"><i class="fas fa-trash"></i></button>
+            </div>
+            <div class="pos-cart-items" id="cart-items">
+              <div class="cart-empty" id="cart-empty"><i class="fas fa-cart-plus" style="font-size:32px;display:block;margin-bottom:8px;color:var(--text3)"></i>Agrega productos al carrito</div>
+            </div>
+            <div class="pos-cart-footer">
+              <div class="cart-totals">
+                <div class="cart-total-row"><span>Subtotal:</span><span id="cart-subtotal" class="font-mono fw700">$0.00</span></div>
+                <div class="cart-total-row"><span>En Bolívares:</span><span id="cart-subtotal-bs" class="font-mono text-green">Bs 0.00</span></div>
+                <div class="cart-total-row final"><span>TOTAL:</span><span id="cart-total" class="font-mono">$0.00</span></div>
+              </div>
+              <button class="btn btn-primary btn-block btn-lg" onclick="abrirCheckout()" id="btn-cobrar"><i class="fas fa-cash-register"></i> Cobrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ INVENTARIO ═══ -->
+      <div id="sec-inventario" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-boxes-stacked"></i> Inventario de Productos</div>
+            <button class="btn btn-primary btn-sm" onclick="abrirModalProducto()"><i class="fas fa-plus"></i> Agregar Producto</button>
+          </div>
+          <div class="search-bar">
+            <input type="text" id="inv-buscar" class="form-input" placeholder="🔍 Buscar..." oninput="renderInventario()">
+            <select id="inv-cat-filter" class="form-input" onchange="renderInventario()">
+              <option value="">Todas las categorías</option>
+            </select>
+            <select id="inv-marca-filter" class="form-input" onchange="renderInventario()">
+              <option value="">Todas las marcas</option>
+            </select>
+          </div>
+          <div class="table-container" id="inv-table-container"></div>
+        </div>
+      </div>
+
+      <!-- ═══ CLIENTES ═══ -->
+      <div id="sec-clientes" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-users"></i> Clientes</div>
+            <button class="btn btn-primary btn-sm" onclick="abrirModalCliente()"><i class="fas fa-plus"></i> Agregar Cliente</button>
+          </div>
+          <div class="search-bar">
+            <input type="text" id="cli-buscar" class="form-input" placeholder="🔍 Buscar cliente..." oninput="renderClientes()">
+          </div>
+          <div class="table-container" id="cli-table-container"></div>
+        </div>
+      </div>
+
+      <!-- ═══ VENTAS ═══ -->
+      <div id="sec-ventas" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-receipt"></i> Historial de Ventas</div>
+          </div>
+          <div class="search-bar">
+            <input type="date" id="ventas-fecha-desde" class="form-input" onchange="renderVentas()">
+            <input type="date" id="ventas-fecha-hasta" class="form-input" onchange="renderVentas()">
+            <select id="ventas-metodo-filter" class="form-input" onchange="renderVentas()">
+              <option value="">Todos los métodos</option>
+            </select>
+          </div>
+          <div class="table-container" id="ventas-table-container"></div>
+        </div>
+      </div>
+
+      <!-- ═══ MARCAS / MODELOS ═══ -->
+      <div id="sec-motos" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-motorcycle"></i> Marcas y Modelos de Motos</div>
+          </div>
+          <div class="search-bar">
+            <input type="text" id="motos-buscar" class="form-input" placeholder="🔍 Buscar marca..." oninput="renderMarcas()">
+          </div>
+          <div id="motos-grid" class="moto-brand-grid"></div>
+        </div>
+      </div>
+
+      <!-- ═══ CAJA ═══ -->
+      <div id="sec-caja" class="section">
+        <div class="stats-grid" style="margin-bottom:16px">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(76,175,80,0.12);color:var(--success)"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="stat-value text-green" id="caja-saldo">Bs 0.00</div>
+            <div class="stat-label">Saldo en Caja</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(255,107,53,0.12);color:var(--orange)"><i class="fas fa-arrow-up"></i></div>
+            <div class="stat-value text-orange" id="caja-ingresos">Bs 0.00</div>
+            <div class="stat-label">Ingresos del Día</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(244,67,54,0.12);color:var(--danger)"><i class="fas fa-arrow-down"></i></div>
+            <div class="stat-value text-red" id="caja-gastos">Bs 0.00</div>
+            <div class="stat-label">Gastos del Día</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-exchange-alt"></i> Movimientos de Caja</div>
+            <div class="flex gap-8">
+              <button class="btn btn-success btn-sm" onclick="abrirMovimientoCaja('ingreso')"><i class="fas fa-plus"></i> Ingreso</button>
+              <button class="btn btn-danger btn-sm" onclick="abrirMovimientoCaja('gasto')"><i class="fas fa-minus"></i> Gasto</button>
+            </div>
+          </div>
+          <div class="table-container" id="caja-table-container"></div>
+        </div>
+      </div>
+
+      <!-- ═══ REPORTES ═══ -->
+      <div id="sec-reportes" class="section">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-chart-bar"></i> Reportes de Ventas</div>
+            <div class="flex gap-8">
+              <input type="date" id="rep-desde" class="form-input" onchange="renderReportes()">
+              <input type="date" id="rep-hasta" class="form-input" onchange="renderReportes()">
+            </div>
+          </div>
+          <div class="stats-grid" style="margin-bottom:16px">
+            <div class="stat-card"><div class="stat-value text-orange" id="rep-total-usd">$0.00</div><div class="stat-label">Total Ventas</div></div>
+            <div class="stat-card"><div class="stat-value text-green" id="rep-total-bs">Bs 0.00</div><div class="stat-label">Total en Bolívares</div></div>
+            <div class="stat-card"><div class="stat-value text-blue" id="rep-total-ventas">0</div><div class="stat-label">Cantidad de Ventas</div></div>
+          </div>
+          <div class="two-col">
+            <div class="card"><div class="card-title"><i class="fas fa-trophy text-gold"></i> Top Productos</div><div id="rep-top-productos"></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-credit-card text-blue"></i> Por Método de Pago</div><div id="rep-metodos"></div></div>
+          </div>
+          <div class="card mt-16">
+            <div class="card-title"><i class="fas fa-chart-column text-orange"></i> Gráfico de Ventas Diarias</div>
+            <canvas id="chart-ventas" height="200" style="width:100%;margin-top:16px"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CONFIGURACIÓN ═══ -->
+      <div id="sec-config" class="section">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><div class="card-title"><i class="fas fa-store"></i> Datos del Negocio</div></div>
+            <div class="form-group"><label class="form-label">NOMBRE DEL NEGOCIO</label><input type="text" id="cfg-nombre" class="form-input"></div>
+            <div class="form-group"><label class="form-label">TELÉFONO</label><input type="tel" id="cfg-telefono" class="form-input"></div>
+            <div class="form-group"><label class="form-label">DIRECCIÓN</label><input type="text" id="cfg-direccion" class="form-input"></div>
+            <div class="form-group"><label class="form-label">CORREO</label><input type="email" id="cfg-email" class="form-input"></div>
+            <div class="form-group"><label class="form-label">RIF</label><input type="text" id="cfg-rif" class="form-input" placeholder="J-XXXXXXXX-X"></div>
+            <button class="btn btn-primary btn-block" onclick="guardarConfig()"><i class="fas fa-save"></i> Guardar</button>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="fas fa-exchange-rate"></i> Tasa de Cambio</div></div>
+              <div class="form-group"><label class="form-label">1 USD = Bs</label><input type="number" id="cfg-tasa" class="form-input" step="0.01" min="0"></div>
+              <button class="btn btn-primary btn-block" onclick="guardarConfig()"><i class="fas fa-save"></i> Actualizar Tasa</button>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="fas fa-shield-halved"></i> Seguridad</div></div>
+              <div class="form-group"><label class="form-label">CLAVE ADMIN LICENCIAS</label><input type="password" id="cfg-admin-pw" class="form-input" placeholder="Clave para panel de licencias"></div>
+              <button class="btn btn-gold btn-block" onclick="guardarAdminPW()"><i class="fas fa-key"></i> Guardar Clave Admin</button>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="fas fa-info-circle"></i> Información de Licencia</div></div>
+              <div id="config-lic-info"></div>
+              <div style="margin-top:12px">
+                <button class="btn btn-secondary btn-block btn-sm" onclick="mostrarInfoLicencia()"><i class="fas fa-key"></i> Ver Licencia</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title text-red"><i class="fas fa-triangle-exclamation"></i> Zona de Peligro</div></div>
+              <button class="btn btn-danger btn-block btn-sm" onclick="resetearDatos()"><i class="fas fa-trash"></i> Resetear Todos los Datos</button>
+              <button class="btn btn-secondary btn-block btn-sm mt-8" onclick="exportarDatos()"><i class="fas fa-download"></i> Exportar Datos</button>
+              <button class="btn btn-secondary btn-block btn-sm mt-8" onclick="importarDatos()"><i class="fas fa-upload"></i> Importar Datos</button>
+              <input type="file" id="import-file" accept=".json" style="display:none" onchange="procesarImportar(event)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+
+<!-- Modal Producto -->
+<div class="modal-overlay" id="modal-producto">
+  <div class="modal">
+    <div class="modal-header"><h2><i class="fas fa-box text-orange"></i> <span id="modal-prod-title">Agregar Producto</span></h2><button class="modal-close" onclick="cerrarModal('modal-producto')">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="prod-id">
+      <div class="two-col">
+        <div class="form-group"><label class="form-label">CÓDIGO / SKU</label><input type="text" id="prod-codigo" class="form-input mono" placeholder="MOT-001"></div>
+        <div class="form-group"><label class="form-label">CATEGORÍA</label><select id="prod-categoria" class="form-input" onchange="actualizarModelos()"><option value="">Seleccionar...</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">NOMBRE DEL PRODUCTO</label><input type="text" id="prod-nombre" class="form-input" placeholder="Descripción del producto"></div>
+      <div class="two-col">
+        <div class="form-group"><label class="form-label">MARCA DE MOTO</label><select id="prod-marca" class="form-input" onchange="actualizarModelos()"><option value="">Todas</option></select></div>
+        <div class="form-group"><label class="form-label">MODELO DE MOTO</label><select id="prod-modelo" class="form-input"><option value="">Todos</option></select></div>
+      </div>
+      <div class="two-col">
+        <div class="form-group"><label class="form-label">PRECIO (USD)</label><input type="number" id="prod-precio" class="form-input" step="0.01" min="0"></div>
+        <div class="form-group"><label class="form-label">PRECIO EN Bs</label><div id="prod-precio-bs" class="form-input" style="background:rgba(76,175,80,0.06);color:var(--success);cursor:default">Bs 0.00</div></div>
+      </div>
+      <div class="two-col">
+        <div class="form-group"><label class="form-label">STOCK ACTUAL</label><input type="number" id="prod-stock" class="form-input" min="0"></div>
+        <div class="form-group"><label class="form-label">STOCK MÍNIMO</label><input type="number" id="prod-stockmin" class="form-input" min="0"></div>
+      </div>
+      <div class="form-group"><label class="form-label">DESCRIPCIÓN</label><textarea id="prod-desc" class="form-input" rows="2" placeholder="Descripción opcional"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="cerrarModal('modal-producto')">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarProducto()"><i class="fas fa-save"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cliente -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-header"><h2><i class="fas fa-user text-blue"></i> <span id="modal-cli-title">Agregar Cliente</span></h2><button class="modal-close" onclick="cerrarModal('modal-cliente')">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="cli-id">
+      <div class="form-group"><label class="form-label">NOMBRE COMPLETO</label><input type="text" id="cli-nombre" class="form-input" placeholder="Nombre del cliente"></div>
+      <div class="two-col">
+        <div class="form-group"><label class="form-label">TELÉFONO</label><input type="tel" id="cli-telefono" class="form-input" placeholder="+58 412-1234567"></div>
+        <div class="form-group"><label class="form-label">CORREO</label><input type="email" id="cli-email" class="form-input" placeholder="correo@ejemplo.com"></div>
+      </div>
+      <div class="form-group"><label class="form-label">DIRECCIÓN</label><input type="text" id="cli-direccion" class="form-input" placeholder="Dirección del cliente"></div>
+      <div class="form-group"><label class="form-label">NOTAS</label><textarea id="cli-notas" class="form-input" rows="2" placeholder="Notas adicionales"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="cerrarModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarCliente()"><i class="fas fa-save"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Checkout -->
+<div class="modal-overlay" id="modal-checkout">
+  <div class="modal" style="max-width:550px">
+    <div class="modal-header"><h2><i class="fas fa-cash-register text-orange"></i> Cobrar</h2><button class="modal-close" onclick="cerrarModal('modal-checkout')">&times;</button></div>
+    <div class="modal-body" id="checkout-body"></div>
+  </div>
+</div>
+
+<!-- Modal Recibo -->
+<div class="modal-overlay" id="modal-recibo">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header"><h2><i class="fas fa-receipt text-green"></i> Recibo de Venta</h2><button class="modal-close" onclick="cerrarModal('modal-recibo')">&times;</button></div>
+    <div class="modal-body" id="recibo-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="imprimirRecibo()"><i class="fas fa-print"></i> Imprimir</button>
+      <button class="btn btn-success" onclick="enviarReciboWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+      <button class="btn btn-primary" onclick="cerrarModal('modal-recibo')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Movimiento Caja -->
+<div class="modal-overlay" id="modal-caja-mov">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h2><i class="fas fa-exchange-alt text-orange"></i> <span id="caja-mov-title">Movimiento</span></h2><button class="modal-close" onclick="cerrarModal('modal-caja-mov')">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="caja-mov-tipo">
+      <div class="form-group"><label class="form-label">MONTO (USD)</label><input type="number" id="caja-mov-monto" class="form-input" step="0.01" min="0"></div>
+      <div class="form-group"><label class="form-label">CONCEPTO</label><input type="text" id="caja-mov-concepto" class="form-input" placeholder="Descripción del movimiento"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="cerrarModal('modal-caja-mov')">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarMovimientoCaja()"><i class="fas fa-save"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detalle Venta -->
+<div class="modal-overlay" id="modal-venta-det">
+  <div class="modal" style="max-width:550px">
+    <div class="modal-header"><h2><i class="fas fa-receipt text-blue"></i> Detalle de Venta</h2><button class="modal-close" onclick="cerrarModal('modal-venta-det')">&times;</button></div>
+    <div class="modal-body" id="venta-det-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+// ═══════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════
+var _lsOK=false;
+try{_lsOK=typeof localStorage!=='undefined';}catch(e){}
+function gel(id){return document.getElementById(id);}
+function DB(){
+  this.get=function(k){try{var v=localStorage.getItem('rmp_'+k);return v?JSON.parse(v):null;}catch(e){return null;}};
+  this.set=function(k,v){try{localStorage.setItem('rmp_'+k,JSON.stringify(v));}catch(e){}};
+  this.remove=function(k){try{localStorage.removeItem('rmp_'+k);}catch(e){}};
+}
+var db=new DB();
+
+function getCfg(){return db.get('config')||{nombre:'Mi Moto Repuestos',telefono:'',direccion:'',email:'',rif:'',tasa:50.00};}
+function saveCfg(c){db.set('config',c);gel('tasa-display').textContent=parseFloat(c.tasa).toFixed(2);}
+function calcBS(usd){return usd*(getCfg().tasa||50);}
+function formatUSD(n){return '$'+parseFloat(n||0).toFixed(2);}
+function formatBS(n){return 'Bs '+parseFloat(n||0).toFixed(2);}
+function formatDate(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleDateString('es-VE',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});}
+function formatDateShort(ts){if(!ts)return'—';return new Date(ts).toLocaleDateString('es-VE',{day:'2-digit',month:'short',year:'numeric'});}
+function genId(){return Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);}
+function toast(msg,type){var t=gel('toast');if(!t)return;t.textContent=msg;t.className='show '+(type||'ok');setTimeout(function(){t.className='';},3500);}
+function copiarDeviceId(elId){var el=gel(elId);if(el){navigator.clipboard.writeText(el.textContent).then(function(){toast('📋 Device ID copiado','ok');});}}
+
+function getProductos(){return db.get('productos')||[];}
+function setProductos(arr){db.set('productos',arr);}
+function getClientes(){return db.get('clientes')||[];}
+function setClientes(arr){db.set('clientes',arr);}
+function getVentas(){return db.get('ventas')||[];}
+function setVentas(arr){db.set('ventas',arr);}
+function getCajaMovs(){return db.get('caja_movs')||[];}
+function setCajaMovs(arr){db.set('caja_movs',arr);}
+
+var _lastRecibo=null;
+
+// ═══════════════════════════════════════════
+// CATEGORÍAS
+// ═══════════════════════════════════════════
+var CATEGORIAS=['Motor y Transmisión','Eléctrico','Frenos','Suspensión','Llantas y Rin','Carrocería','Lubricantes y Filtros','Cascos y Periquitos','Accesorios','Herramientas'];
+var CAT_ICONS={'Motor y Transmisión':'fa-gears','Eléctrico':'fa-bolt','Frenos':'fa-compact-disc','Suspensión':'fa-arrows-up-down','Llantas y Rin':'fa-circle-dot','Carrocería':'fa-motorcycle','Lubricantes y Filtros':'fa-oil-can','Cascos y Periquitos':'fa-helmet-safety','Accesorios':'fa-puzzle-piece','Herramientas':'fa-wrench'};
+
+var METODOS_PAGO=[
+  {id:'efectivo_usd',nombre:'Efectivo USD',icon:'fa-dollar-sign',color:'var(--success)'},
+  {id:'efectivo_bs',nombre:'Efectivo Bolívares',icon:'fa-bolivar-sign',color:'var(--gold)'},
+  {id:'pago_movil',nombre:'Pago Móvil',icon:'fa-mobile-screen',color:'var(--blue)'},
+  {id:'transferencia',nombre:'Transferencia',icon:'fa-building-columns',color:'var(--fuchsia)'},
+  {id:'punto_venta',nombre:'Punto de Venta',icon:'fa-credit-card',color:'var(--orange)'},
+  {id:'zelle',nombre:'Zelle',icon:'fa-money-bill-transfer',color:'var(--blue)'},
+  {id:'biopago',nombre:'Biopago',icon:'fa-fingerprint',color:'var(--fuchsia)'},
+  {id:'mixto',nombre:'Pago Mixto',icon:'fa-shuffle',color:'var(--gold)'}
+];
+
+var BANCOS_VZLA=['Banesco','Mercantil','Provincial','BNC','Bicentenario','Venezuela','BOD','Bicentenario del Pueblo','Exterior','Otro'];
+
+// ═══════════════════════════════════════════
+// MOTORCYCLE DATABASE
+// ═══════════════════════════════════════════
+var MARCAS_MOTOS={
+'Honda':['CG125','CG125 Fan','CG125 Cargo','CGL125','CB150F','CB200','CB300R','XR150L','XR150 Tornado','XR250 Tornado','CRF150L','CRF230F','CRF250L','PCX125','PCX150','PCX160','Lead 110','Lead 125','Wave 110','Wave 125','Biz 125','CBR250R','CBR300R','CBR500R','ADV150','ADV350','Forza 300','Forza 350','SH125','SH150','SH300','Rebel 300','Rebel 500'],
+'Yamaha':['YBR125','YBR125G','SZ125','SZ150','FZ16','FZ25','XT125','XT225','XT250','XTZ125','XTZ150','DT175','DT180','YS250 Fazer','MT-03','MT-07','MT-09','MT-15','R15','R3','R7','XSR155','XSR700','Tracer 9','Tracer 700','NMAX 125','NMAX 155','TMAX 530','Fascino 125','RayZR 125','WR250R'],
+'Suzuki':['AX100','GN125','EN125','DR200','DR200SE','DR350','DR650','GSF650 Bandit','V-Strom 250','V-Strom 650','V-Strom 1000','GSX-R600','GSX-R750','GSX-R1000','GSX250R','Burgman 200','Burgman 400','AN125','AN150','Intruder 250','Intruder 800','Hayabusa','SV650','GSR750'],
+'Kawasaki':['Ninja 250','Ninja 300','Ninja 400','Ninja 650','KLR250','KLR650','KLX250','KLX450','Z250','Z400','Z650','Z900','Versys 300','Versys 650','Vulcan S','Vulcan 900','KX250F','KX450F','W175','W800'],
+'Bajaj':['Discover 125','Discover 150','Pulsar 150','Pulsar 200','Pulsar 220','Pulsar NS200','Pulsar AS200','Platina 100','Platina 125','Boxer BM150','Boxer CT150','CT100','CT125','Dominar 400','Avenger 220','V15'],
+'Kymco':['Agility 125','Agility 150','Agility 200','Like 125','Like 150','People S 125','People S 200','People S 300','Dink 125','Dink 150','K-Pipe 125','K-Pipe 150','Grand Dink 125','Grand Dink 300','Super 8','Super 9','GT 125','GT 300'],
+'AKT':['AK125','AKT 125','AKT 150','AKT 200','AKT 250','CR5','TT125','TT150','RKV 125','RKV 150'],
+'Corven':['CR5','CR7','CV125','CV150','CV200','CV250','Eco 110','Eco 125','Sport 150','Sport 200'],
+'Zanella':['Z150','Z150 Flex','Z125','Patagonia Eagle 150','PH150','GA 125','GA 150'],
+'Jialing':['JH70','JH125','JH150','JL125','JL150'],
+'Linhai':['LH125','LH150','LH200','LH260','LH300'],
+'Lifan':['LF125','LF150','LF200','LF250','KPR 150','KPR 200','KPR 250','LF300'],
+'Loncin':['LX125','LX150','LX200','LX250'],
+'Bashan':['BS125','BS150','BS200','BS250'],
+'Centauro':['Viento 150','Rayo 125','Centauro 125','Centauro 150','Storm 200'],
+'Dinamo':['D125','D150','D200','D250'],
+'KTM':['Duke 125','Duke 200','Duke 390','Adventure 250','Adventure 390','RC 200','RC 390'],
+'Ducati':['Monster 797','Monster 937','Scrambler','Panigale V2','Multistrada 950','Multistrada V4','Hypermotard 950'],
+'BMW':['G310R','G310GS','F750GS','F850GS','R1200GS','R1250GS','S1000RR','K1600 GTL'],
+'Harley-Davidson':['Street 500','Street 750','Iron 883','Iron 1200','Sportster S','Forty-Eight','Fat Boy','Road King'],
+'Triumph':['Bonnieville T100','Bonnieville T120','Tiger 900','Street Triple','Speed Triple','Rocket 3','Trident 660'],
+'Royal Enfield':['Classic 350','Classic 500','Bullet 350','Bullet 500','Himalayan','Meteor 350','Continental GT 650','Interceptor 650'],
+'TVS':['Apache RTR 160','Apache RTR 200','Apache RTR 300','Ronin','Raider 125','Ntorq 125'],
+'Hero':['Xtreme 160R','XPulse 200','Splendor','Splendor Plus','Passion','Glamour','HF Deluxe'],
+'Piaggio/Vespa':['Vespa Primavera 150','Vespa Sprint 150','Vespa GTS 300','Liberty 125','Medley 125','Beverly 350'],
+'CFMoto':['250NK','400NK','650NK','700CL-X','800MT','800ADV'],
+'Benelli':['TNT 135','TNT 25','TNT 300','TNT 600','Leoncino 500','TRK 502','Imperator 400'],
+'Aprilia':['RS 457','Tuareg 660','SX 50','RX 125','SR 160']
+};
+
+
+// ═══════════════════════════════════════════
+// IRON LOCK v2 — REPUESTOS DE MOTOS PRO
+// ═══════════════════════════════════════════
+var _SIGN_SALT='RMPMOTOS2026';
+var MASTER_LICS=['RMP-PRO-DEMO-2024','RMP-PRO-A2K-2026','RMP-PRO-MAST-2026'];
+var _demoWatchdog=null;
+
+function _hash(s){var h=0;for(var i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;}return Math.abs(h).toString(36).toUpperCase();}
+
+function getDeviceId(){
+  var saved=_lsOK?localStorage.getItem('rmp_device_id'):null;
+  if(saved&&saved.length>4)return saved;
+  var fp=[navigator.userAgent,navigator.language,navigator.platform,screen.width+'x'+screen.height+screen.colorDepth,new Date().getTimezoneOffset(),navigator.hardwareConcurrency||2].join('||');
+  var h=0,h2=0;
+  for(var i=0;i<fp.length;i++){h=Math.imul(31,h)+fp.charCodeAt(i)|0;h2=Math.imul(37,h2)+fp.charCodeAt(i)|0;}
+  var id='RMP-'+Math.abs(h).toString(36).toUpperCase().padStart(4,'0').slice(0,4)+'-'+Math.abs(h2).toString(36).toUpperCase().padStart(4,'0').slice(0,4)+'-'+Math.abs(h^h2).toString(36).toUpperCase().padStart(4,'0').slice(0,4);
+  if(_lsOK)localStorage.setItem('rmp_device_id',id);
+  return id;
+}
+
+function _devHash(deviceId){return _hash(deviceId+_SIGN_SALT).slice(0,6);}
+
+function _generarFirmadaPRO(deviceId){
+  var dh=_devHash(deviceId);
+  var rnd=Math.random().toString(36).slice(2,6).toUpperCase();
+  var base='RMP-PRO-'+dh+'-'+rnd;
+  var check=_hash(base+_SIGN_SALT).slice(0,4);
+  return base+'-'+check;
+}
+
+function _generarFirmadaDEMO(){
+  var rnd=Math.random().toString(36).slice(2,8).toUpperCase();
+  var base='RMP-DEMO-'+rnd;
+  var check=_hash(base+_SIGN_SALT).slice(0,4);
+  return base+'-'+check;
+}
+
+function _verificarFirmada(code){
+  var p=code.trim().toUpperCase();
+  if(MASTER_LICS.indexOf(p)>=0)return{valid:true,tipo:'PRO',master:true};
+  var mPRO=p.match(/^(RMP-PRO-([A-Z0-9]{6})-[A-Z0-9]{4})-([A-Z0-9]{4})$/);
+  if(mPRO){
+    var base=mPRO[1],embDevHash=mPRO[2],check=mPRO[3];
+    if(_hash(base+_SIGN_SALT).slice(0,4)!==check)return{valid:false,msg:'❌ Código PRO inválido o corrupto.'};
+    var myDH=_devHash(getDeviceId());
+    if(embDevHash!==myDH)return{valid:false,msg:'🚫 Esta licencia ya está en uso en otro terminal. Contacta al administrador para obtener una licencia para este dispositivo.'};
+    return{valid:true,tipo:'PRO'};
+  }
+  var mDEMO=p.match(/^(RMP-DEMO-[A-Z0-9]{6})-([A-Z0-9]{4})$/);
+  if(mDEMO){
+    var base2=mDEMO[1],check2=mDEMO[2];
+    if(_hash(base2+_SIGN_SALT).slice(0,4)!==check2)return{valid:false,msg:'❌ Código DEMO inválido o corrupto.'};
+    return{valid:true,tipo:'DEMO'};
+  }
+  return{valid:false,msg:'❌ Formato de código no reconocido.'};
+}
+
+function _ironLockInit(){
+  var devId=getDeviceId();
+  var did=gel('lock-device-id');if(did)did.textContent=devId;
+  var did2=gel('lock-device-id-login');if(did2)did2.textContent=devId;
+  var cuenta=db.get('cuenta');
+  if(!cuenta){var rg=gel('lock-register');if(rg)rg.style.display='block';return;}
+  var saved=db.get('licencia_activa');
+  if(saved){
+    if(!saved.master&&saved.device!==devId){db.remove('licencia_activa');}
+    else if(saved.tipo==='DEMO'&&saved.expiry&&Date.now()>saved.expiry){
+      db.remove('licencia_activa');
+      var ls=gel('lock-status-box');
+      _mostrarLoginForm(cuenta,devId);
+      return;
+    }else{_mostrarLoginForm(cuenta,devId);return;}
+  }
+  _mostrarLoginForm(cuenta,devId);
+}
+
+function _mostrarLoginForm(cuenta,devId){
+  var ll=gel('lock-login');if(ll)ll.style.display='block';
+  var nn=gel('login-negocio-name');if(nn)nn.textContent='🏪 '+cuenta.negocio;
+  var li=gel('login-lic-info');
+  if(li){
+    var saved=db.get('licencia_activa');
+    if(saved&&saved.tipo==='DEMO'&&saved.expiry){
+      var rem=Math.max(0,Math.ceil((saved.expiry-Date.now())/(1000*60*60*24)));
+      li.innerHTML='<span style="color:var(--warn)">● DEMO — ⏳ '+rem+' día'+(rem!==1?'s':'')+' restante'+(rem!==1?'s':'')+'</span>';
+    }else if(saved&&saved.tipo==='PRO'){li.innerHTML='<span style="color:var(--gold)">● Licencia PRO activa</span>';}
+    else{li.innerHTML='<span style="color:var(--text3)">Sin licencia activa</span>';}
+  }
+}
+
+function registrarCuenta(){
+  var negocio=(gel('reg-negocio')||{}).value||'';
+  var telefono=(gel('reg-telefono')||{}).value||'';
+  var email=(gel('reg-email')||{}).value||'';
+  var usuario=(gel('reg-usuario')||{}).value||'';
+  var pw=(gel('reg-pw')||{}).value||'';
+  var pw2=(gel('reg-pw2')||{}).value||'';
+  var lic=(gel('reg-lic')||{}).value||'';
+  var msg=gel('reg-msg');
+  function err(t){if(msg){msg.style.color='var(--danger)';msg.textContent=t;}return;}
+  if(!negocio.trim())return err('Ingresa el nombre del negocio.');
+  if(!usuario.trim()||usuario.length<3)return err('El usuario debe tener al menos 3 caracteres.');
+  if(!pw||pw.length<4)return err('La contraseña debe tener al menos 4 caracteres.');
+  if(pw!==pw2)return err('Las contraseñas no coinciden.');
+  if(lic.trim()){
+    var r=_verificarFirmada(lic);
+    if(!r.valid){if(msg){msg.style.color='var(--danger)';msg.innerHTML=r.msg;}return;}
+    var cuenta={negocio:negocio.trim(),telefono:telefono.trim(),email:email.trim(),usuario:usuario.trim().toLowerCase(),pwHash:_hash(pw+_SIGN_SALT+'RMPPW'),deviceId:getDeviceId(),ts:Date.now()};
+    db.set('cuenta',cuenta);
+    var cfg=getCfg();cfg.nombre=negocio.trim();saveCfg(cfg);
+    if(r.tipo==='DEMO'){_activarComoDemo(lic);}
+    else{var licObj={code:lic.trim().toUpperCase(),tipo:'PRO',device:getDeviceId(),activado:Date.now(),master:!!r.master};db.set('licencia_activa',licObj);_desbloquearApp(licObj);}
+  }else{if(msg){msg.style.color='var(--text3)';msg.textContent='Ingresa un código de licencia o usa la prueba gratuita.';}}
+}
+
+function usarDemoRegistro(){
+  var negocio=(gel('reg-negocio')||{}).value||'';
+  var usuario=(gel('reg-usuario')||{}).value||'';
+  var pw=(gel('reg-pw')||{}).value||'';
+  var pw2=(gel('reg-pw2')||{}).value||'';
+  var msg=gel('reg-msg');
+  function err(t){if(msg){msg.style.color='var(--danger)';msg.textContent=t;}return false;}
+  if(!negocio.trim()){err('Ingresa el nombre del negocio.');return;}
+  if(!usuario.trim()||usuario.length<3){err('El usuario debe tener al menos 3 caracteres.');return;}
+  if(!pw||pw.length<4){err('La contraseña debe tener al menos 4 caracteres.');return;}
+  if(pw!==pw2){err('Las contraseñas no coinciden.');return;}
+  var demoUsedKey='rmp_demo_used_'+getDeviceId().replace(/-/g,'');
+  var demoUsed=_lsOK?localStorage.getItem(demoUsedKey):null;
+  if(demoUsed&&Date.now()>parseInt(demoUsed)){err('⏰ El período de prueba ya finalizó. Adquiere la licencia PRO.');return;}
+  var cuenta={negocio:negocio.trim(),telefono:(gel('reg-telefono')||{}).value||'',email:(gel('reg-email')||{}).value||'',usuario:usuario.trim().toLowerCase(),pwHash:_hash(pw+_SIGN_SALT+'RMPPW'),deviceId:getDeviceId(),ts:Date.now()};
+  db.set('cuenta',cuenta);
+  var cfg=getCfg();cfg.nombre=negocio.trim();saveCfg(cfg);
+  activarDemo();
+}
+
+function iniciarSesion(){
+  var usuario=(gel('login-usuario')||{}).value||'';
+  var pw=(gel('login-pw')||{}).value||'';
+  var msg=gel('login-msg');
+  function err(t){if(msg){msg.style.color='var(--danger)';msg.textContent=t;}return;}
+  var cuenta=db.get('cuenta');
+  if(!cuenta)return err('No se encontró cuenta registrada.');
+  if(usuario.trim().toLowerCase()!==cuenta.usuario)return err('Usuario incorrecto.');
+  if(_hash(pw+_SIGN_SALT+'RMPPW')!==cuenta.pwHash)return err('Contraseña incorrecta.');
+  var saved=db.get('licencia_activa');
+  if(!saved){
+    if(msg){msg.style.color='var(--warn)';msg.innerHTML='⚠️ No hay licencia activa. Ingresa un código:<br>'
+      +'<input id="reactivar-lic" type="text" placeholder="RMP-PRO-... o RMP-DEMO-..." style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-family:var(--mono);font-size:12px;text-align:center;letter-spacing:1px" autocomplete="off" spellcheck="false">'
+      +'<button onclick="reactivarLicenciaLogin()" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:none;background:var(--orange);color:#fff;cursor:pointer;font-weight:700;font-size:13px">🔑 Activar</button>';}return;
+  }
+  if(saved.tipo==='DEMO'&&saved.expiry&&Date.now()>saved.expiry){db.remove('licencia_activa');return err('⏰ Tu período de prueba finalizó. Adquiere la licencia PRO.');}
+  _desbloquearApp(saved);
+}
+
+function reactivarLicenciaLogin(){
+  var lic=(gel('reactivar-lic')||{}).value||'';
+  var msg=gel('login-msg');
+  if(!lic.trim()){if(msg)msg.textContent='Ingresa un código.';return;}
+  var r=_verificarFirmada(lic);
+  if(!r.valid){if(msg){msg.style.color='var(--danger)';msg.innerHTML=r.msg;}return;}
+  if(r.tipo==='DEMO'){_activarComoDemo(lic);}else{var licObj={code:lic.trim().toUpperCase(),tipo:'PRO',device:getDeviceId(),activado:Date.now(),master:!!r.master};db.set('licencia_activa',licObj);_desbloquearApp(licObj);}
+}
+
+function activarDemo(){
+  var demoUsedKey='rmp_demo_used_'+getDeviceId().replace(/-/g,'');
+  var demoUsed=_lsOK?localStorage.getItem(demoUsedKey):null;
+  if(demoUsed){var exp=parseInt(demoUsed);if(Date.now()>exp){var msg=gel('reg-msg');if(msg)msg.innerHTML='<span style="color:var(--danger)">⏰ El período de prueba de este dispositivo ya finalizó.<br>Adquiere la licencia PRO.</span>';return;}
+    var lic={code:'RMP-DEMO-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:exp};db.set('licencia_activa',lic);_desbloquearApp(lic);return;}
+  var expiry=Date.now()+5*24*60*60*1000;
+  if(_lsOK)localStorage.setItem(demoUsedKey,String(expiry));
+  var lic={code:'RMP-DEMO-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:expiry};db.set('licencia_activa',lic);_desbloquearApp(lic);
+}
+
+function _activarComoDemo(code){
+  var cleanCode=code.trim().toUpperCase();
+  var demoKey='rmp_demo_exp_'+cleanCode.replace(/[^A-Z0-9]/g,'');
+  var existing=_lsOK?localStorage.getItem(demoKey):null;
+  var expiry;
+  if(existing){expiry=parseInt(existing);if(Date.now()>expiry){var msg=gel('reg-msg');if(msg)msg.innerHTML='<span style="color:var(--danger)">⏰ Este código DEMO ha vencido (5 días).<br>Solicita una licencia PRO.</span>';return;}}
+  else{expiry=Date.now()+5*24*60*60*1000;if(_lsOK)localStorage.setItem(demoKey,String(expiry));}
+  var lic={code:cleanCode,tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:expiry};db.set('licencia_activa',lic);_desbloquearApp(lic);
+}
+
+function _desbloquearApp(lic){
+  var ls=gel('loginScreen'),app=gel('app');
+  if(ls)ls.style.setProperty('display','none','important');
+  if(app)app.style.setProperty('display','flex','important');
+  var sl=gel('sidebar-lic');
+  if(sl){
+    if(lic.tipo==='DEMO'&&lic.expiry){var rem=Math.max(0,Math.ceil((lic.expiry-Date.now())/(1000*60*60*24)));sl.innerHTML='<span style="color:var(--warn)">● DEMO</span><br><span style="color:var(--warn);font-size:10px">⏳ '+rem+' día'+(rem!==1?'s':'')+'</span>';}
+    else{sl.innerHTML='<span style="color:var(--gold)">● '+(lic.master?'MASTER':'PRO')+'</span><br><span style="color:var(--text3);font-size:10px">'+lic.device+'</span>';}
+  }
+  if(lic.tipo==='DEMO'&&lic.expiry){
+    if(_demoWatchdog)clearInterval(_demoWatchdog);
+    _demoWatchdog=setInterval(function(){
+      var s=db.get('licencia_activa');
+      if(s&&s.tipo==='DEMO'&&s.expiry&&Date.now()>s.expiry){clearInterval(_demoWatchdog);db.remove('licencia_activa');location.reload();}
+    },60000);
+  }
+  initApp();
+}
+
+function cerrarSesion(){
+  if(!confirm('¿Cerrar sesión?'))return;
+  gel('app').style.display='none';
+  gel('loginScreen').style.display='flex';
+  gel('lock-login').style.display='block';
+  gel('lock-register').style.display='none';
+  gel('login-usuario').value='';gel('login-pw').value='';gel('login-msg').textContent='';
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+var _currentSection='dashboard';
+var SECTION_TITLES={'dashboard':'<i class="fas fa-chart-line text-orange"></i> Dashboard','pos':'<i class="fas fa-cash-register text-orange"></i> Punto de Venta','inventario':'<i class="fas fa-boxes-stacked text-orange"></i> Inventario','clientes':'<i class="fas fa-users text-orange"></i> Clientes','ventas':'<i class="fas fa-receipt text-orange"></i> Ventas','motos':'<i class="fas fa-motorcycle text-orange"></i> Marcas / Modelos','caja':'<i class="fas fa-vault text-orange"></i> Caja','reportes':'<i class="fas fa-chart-bar text-orange"></i> Reportes','config':'<i class="fas fa-gear text-orange"></i> Configuración'};
+
+function navigate(sec){
+  _currentSection=sec;
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  var el=gel('sec-'+sec);if(el)el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  var nav=gel('nav-item-'+sec);if(nav)nav.classList.add('active');
+  else document.querySelectorAll('.nav-item').forEach(function(n){if(n.getAttribute('data-nav')===sec)n.classList.add('active');});
+  var tb=gel('top-bar-title');if(tb)tb.innerHTML=SECTION_TITLES[sec]||sec;
+  if(sec==='dashboard')renderDashboard();
+  if(sec==='inventario')renderInventario();
+  if(sec==='clientes')renderClientes();
+  if(sec==='ventas')renderVentas();
+  if(sec==='motos')renderMarcas();
+  if(sec==='caja')renderCaja();
+  if(sec==='reportes')renderReportes();
+  if(sec==='config')loadConfig();
+  if(sec==='pos')renderPOS();
+  var ov=gel('sidebar-overlay');if(ov)ov.classList.remove('show');
+  var sb=gel('sidebar');if(sb)sb.classList.remove('open');
+}
+
+function toggleSidebar(){
+  var ov=gel('sidebar-overlay');var sb=gel('sidebar');
+  if(ov)ov.classList.toggle('show');
+  if(sb)sb.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════
+function abrirModal(id){var m=gel(id);if(m)m.classList.add('show');}
+function cerrarModal(id){var m=gel(id);if(m)m.classList.remove('show');}
+
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+function renderDashboard(){
+  var ventas=getVentas();
+  var productos=getProductos();
+  var hoy=new Date();hoy.setHours(0,0,0,0);var hoyTs=hoy.getTime();
+  var ventasHoy=ventas.filter(function(v){return v.fecha>=hoyTs;});
+  var totalUSD=0;
+  ventasHoy.forEach(function(v){totalUSD+=v.total||0;});
+  gel('dash-ventas-usd').textContent=formatUSD(totalUSD);
+  gel('dash-ventas-bs').textContent=formatBS(calcBS(totalUSD));
+  var totalStock=0;var alertas=[];
+  productos.forEach(function(p){totalStock+=p.stock||0;if(p.stock<=(p.stockMin||0))alertas.push(p);});
+  gel('dash-productos').textContent=productos.length;
+  gel('dash-alertas').textContent=alertas.length;
+
+  // Top vendidos
+  var conteo={};
+  ventas.forEach(function(v){(v.items||[]).forEach(function(it){var n=it.nombre;if(conteo[n])conteo[n]+=it.cantidad||1;else conteo[n]=it.cantidad||1;});});
+  var top=Object.entries(conteo).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+  var topHtml='';
+  if(top.length){top.forEach(function(t,i){topHtml+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><span style="width:22px;height:22px;border-radius:50%;background:'+(i===0?'var(--gold)':i===1?'#c0c0c0':'#cd7f32')+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#000">'+(i+1)+'</span><span style="flex:1;font-size:13px;font-weight:600">'+t[0]+'</span><span class="badge badge-orange">'+t[1]+' vendidos</span></div>';});}
+  else{topHtml='<div class="empty-state">Sin ventas registradas</div>';}
+  gel('dash-top-vendidos').innerHTML=topHtml;
+
+  // Últimas ventas
+  var ult=ventas.slice().reverse().slice(0,5);
+  var ultHtml='';
+  if(ult.length){ult.forEach(function(v){ultHtml+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><div style="flex:1"><div style="font-size:13px;font-weight:600">#'+(v.numero||'000')+'</div><div style="font-size:11px;color:var(--text3)">'+formatDate(v.fecha)+'</div></div><span class="font-mono text-orange fw700">'+formatUSD(v.total)+'</span></div>';});}
+  else{ultHtml='<div class="empty-state">Sin ventas registradas</div>';}
+  gel('dash-ultimas-ventas').innerHTML=ultHtml;
+
+  // Alertas
+  if(alertas.length){
+    gel('dash-alertas-card').style.display='block';
+    var alertHtml='';alertas.forEach(function(p){alertHtml+='<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)"><span class="badge badge-red">⚠️ Stock: '+p.stock+'</span><span style="flex:1;font-size:12px">'+p.nombre+'</span><span class="text-muted font-mono" style="font-size:11px">'+p.codigo+'</span></div>';});
+    gel('dash-alertas-list').innerHTML=alertHtml;
+  }else{gel('dash-alertas-card').style.display='none';}
+}
+
+// ═══════════════════════════════════════════
+// POS / PUNTO DE VENTA
+// ═══════════════════════════════════════════
+var _cart=[];
+var _posCatFilter='';
+
+function renderPOS(){
+  var cats=gel('pos-categorias');
+  var catsHtml='<button class="pos-cat-btn '+( !_posCatFilter?'active':'')+'" onclick="filtrarPOSCat(\'\')">📦 Todos</button>';
+  CATEGORIAS.forEach(function(c){var ico=CAT_ICONS[c]||'fa-box';catsHtml+='<button class="pos-cat-btn '+(_posCatFilter===c?'active':'')+'" onclick="filtrarPOSCat(\''+c.replace(/'/g,"\\'")+'\')"><i class="fas '+ico+'"></i> '+c+'</button>';});
+  cats.innerHTML=catsHtml;
+  filtrarPOSProductos();
+}
+
+function filtrarPOSCat(cat){_posCatFilter=cat;renderPOS();}
+
+function filtrarPOSProductos(){
+  var busq=(gel('pos-buscar')||{}).value||'';
+  var busqL=busq.toLowerCase();
+  var prods=getProductos();
+  var filtered=prods.filter(function(p){
+    if(p.stock<=0)return false;
+    if(_posCatFilter&&p.categoria!==_posCatFilter)return false;
+    if(busqL){
+      var found=p.nombre.toLowerCase().indexOf(busqL)>=0||p.codigo.toLowerCase().indexOf(busqL)>=0||(p.modelo||'').toLowerCase().indexOf(busqL)>=0||(p.marca||'').toLowerCase().indexOf(busqL)>=0;
+      return found;
+    }
+    return true;
+  });
+  var grid=gel('pos-productos-grid');
+  if(!filtered.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1">No se encontraron productos</div>';return;}
+  var html='';
+  filtered.forEach(function(p){
+    var stockBadge=p.stock<=p.stockMin?'<span class="badge badge-red">Stock: '+p.stock+'</span>':'<span style="color:var(--text3);font-size:10px">Stock: '+p.stock+'</span>';
+    html+='<div class="pos-item" onclick="agregarAlCarrito(\''+p.id+'\')">'
+      +'<div class="pos-item-name">'+p.nombre+'</div>'
+      +'<div class="pos-item-model">'+(p.marca?p.marca:'')+(p.modelo?' — '+p.modelo:'')+'</div>'
+      +'<div class="pos-item-price">'+formatUSD(p.precio)+'</div>'
+      +'<div class="pos-item-price-bs">'+formatBS(calcBS(p.precio))+'</div>'
+      +'<div class="pos-item-stock">'+stockBadge+'</div>'
+      +'</div>';
+  });
+  grid.innerHTML=html;
+}
+
+function agregarAlCarrito(prodId){
+  var prods=getProductos();
+  var prod=prods.find(function(p){return p.id===prodId;});
+  if(!prod)return;
+  var existing=_cart.find(function(c){return c.id===prodId;});
+  if(existing){
+    if(existing.cantidad>=prod.stock){toast('⚠️ No hay suficiente stock','warn');return;}
+    existing.cantidad++;
+  }else{
+    _cart.push({id:prodId,nombre:prod.nombre,precio:prod.precio,cantidad:1,stock:prod.stock,marca:prod.marca,modelo:prod.modelo,codigo:prod.codigo});
+  }
+  renderCart();
+}
+
+function cambiarCantidad(prodId,delta){
+  var item=_cart.find(function(c){return c.id===prodId;});
+  if(!item)return;
+  item.cantidad+=delta;
+  if(item.cantidad<=0)_cart=_cart.filter(function(c){return c.id!==prodId;});
+  else if(item.cantidad>item.stock){item.cantidad=item.stock;toast('⚠️ Stock máximo alcanzado','warn');}
+  renderCart();
+}
+
+function quitarDelCarrito(prodId){_cart=_cart.filter(function(c){return c.id!==prodId;});renderCart();}
+
+function vaciarCarrito(){if(_cart.length&&!confirm('¿Vaciar carrito?'))return;_cart=[];renderCart();}
+
+function renderCart(){
+  var items=gel('cart-items');var count=gel('cart-count');
+  count.textContent=_cart.reduce(function(a,c){return a+c.cantidad;},0);
+  if(!_cart.length){items.innerHTML='<div class="cart-empty" id="cart-empty"><i class="fas fa-cart-plus" style="font-size:32px;display:block;margin-bottom:8px;color:var(--text3)"></i>Agrega productos al carrito</div>';gel('cart-subtotal').textContent='$0.00';gel('cart-subtotal-bs').textContent='Bs 0.00';gel('cart-total').textContent='$0.00';return;}
+  var html='';var subtotal=0;
+  _cart.forEach(function(c){
+    var sub=c.precio*c.cantidad;subtotal+=sub;
+    html+='<div class="cart-item">'
+      +'<div class="cart-item-info"><div class="cart-item-name">'+c.nombre+'</div><div class="cart-item-price">'+formatUSD(c.precio)+' c/u</div></div>'
+      +'<div class="cart-item-qty"><button onclick="cambiarCantidad(\''+c.id+'\',-1)">−</button><span>'+c.cantidad+'</span><button onclick="cambiarCantidad(\''+c.id+'\',1)">+</button></div>'
+      +'<div class="cart-item-subtotal">'+formatUSD(sub)+'</div>'
+      +'<button class="cart-item-remove" onclick="quitarDelCarrito(\''+c.id+'\')"><i class="fas fa-xmark"></i></button>'
+      +'</div>';
+  });
+  items.innerHTML=html;
+  gel('cart-subtotal').textContent=formatUSD(subtotal);
+  gel('cart-subtotal-bs').textContent=formatBS(calcBS(subtotal));
+  gel('cart-total').textContent=formatUSD(subtotal);
+}
+
+// ═══════════════════════════════════════════
+// CHECKOUT
+// ═══════════════════════════════════════════
+function abrirCheckout(){
+  if(!_cart.length){toast('⚠️ El carrito está vacío','warn');return;}
+  var subtotal=0;
+  _cart.forEach(function(c){subtotal+=c.precio*c.cantidad;});
+  var descuento=0;
+  var html='<div class="checkout-items">';
+  _cart.forEach(function(c){var sub=c.precio*c.cantidad;html+='<div class="checkout-item"><span>'+c.nombre+' x'+c.cantidad+'</span><span>'+formatUSD(sub)+'</span></div>';});
+  html+='</div>'
+    +'<div style="margin-bottom:12px">'
+    +'<div class="cart-total-row"><span>Subtotal:</span><span class="font-mono">'+formatUSD(subtotal)+'</span></div>'
+    +'<div class="cart-total-row"><span>Bolívares:</span><span class="font-mono text-green">'+formatBS(calcBS(subtotal))+'</span></div>'
+    +'</div>'
+    +'<div class="form-group"><label class="form-label">DESCUENTO (%)</label><input type="number" id="chk-descuento" class="form-input" value="0" min="0" max="100" oninput="actualizarCheckoutTotal()"></div>'
+    +'<div class="cart-total-row final"><span>TOTAL:</span><span class="font-mono" id="chk-total">'+formatUSD(subtotal)+'</span></div>'
+    +'<div class="cart-total-row"><span>TOTAL Bs:</span><span class="font-mono text-green" id="chk-total-bs">'+formatBS(calcBS(subtotal))+'</span></div>'
+    +'<div style="margin-top:16px"><label class="form-label">MÉTODO DE PAGO</label>'
+    +'<div class="payment-methods">';
+  METODOS_PAGO.forEach(function(m){
+    html+='<div class="pay-method-btn" onclick="selMetodo(\''+m.id+'\',this)" id="pay-'+m.id+'"><i class="fas '+m.icon+'" style="color:'+m.color+'"></i><span>'+m.nombre+'</span></div>';
+  });
+  html+='</div></div>'
+    +'<div id="pay-extra-fields"></div>'
+    +'<button class="btn btn-primary btn-block btn-lg mt-16" onclick="confirmarVenta()" id="btn-confirmar-venta"><i class="fas fa-check-circle"></i> Confirmar Venta</button>';
+  gel('checkout-body').innerHTML=html;
+  abrirModal('modal-checkout');
+}
+
+var _selectedMetodo='';
+function selMetodo(id,el){
+  _selectedMetodo=id;
+  document.querySelectorAll('.pay-method-btn').forEach(function(b){b.classList.remove('selected');});
+  el.classList.add('selected');
+  var fields=gel('pay-extra-fields');
+  var html='';
+  if(id==='efectivo_usd'){html='<div class="form-group"><label class="form-label">MONTO RECIBIDO (USD)</label><input type="number" id="pay-monto" class="form-input" step="0.01" min="0" oninput="calcularCambio()"></div><div class="cart-total-row"><span>Cambio:</span><span class="font-mono text-green" id="pay-cambio">$0.00</span></div>';}
+  else if(id==='efectivo_bs'){html='<div class="form-group"><label class="form-label">MONTO RECIBIDO (Bs)</label><input type="number" id="pay-monto-bs" class="form-input" step="0.01" min="0" oninput="calcularCambioBs()"></div><div class="cart-total-row"><span>Cambio:</span><span class="font-mono text-green" id="pay-cambio-bs">Bs 0.00</span></div>';}
+  else if(id==='pago_movil'||id==='transferencia'){html='<div class="form-group"><label class="form-label">BANCO</label><select id="pay-banco" class="form-input">';BANCOS_VZLA.forEach(function(b){html+='<option>'+b+'</option>';});html+='</select></div><div class="form-group"><label class="form-label">TELÉFONO / REFERENCIA</label><input type="text" id="pay-ref" class="form-input" placeholder="Nº de referencia"></div>';}
+  else if(id==='zelle'){html='<div class="form-group"><label class="form-label">EMAIL ZELLE</label><input type="email" id="pay-zelle" class="form-input" placeholder="correo@ejemplo.com"></div>';}
+  else if(id==='mixto'){
+    var subtotal=getCartSubtotalConDesc();
+    var mitadUSD=subtotal/2;var mitadBs=calcBS(mitadUSD);
+    html='<div style="background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;margin-bottom:12px"><div style="font-size:12px;color:var(--gold);font-weight:700;margin-bottom:8px">🔀 Pago Mixto — Divide entre USD y Bs</div>'
+      +'<div class="form-group"><label class="form-label">MONTO EN USD</label><input type="number" id="pay-mix-usd" class="form-input" step="0.01" value="'+mitadUSD.toFixed(2)+'" oninput="actualizarMixto()"></div>'
+      +'<div class="form-group"><label class="form-label">MONTO EN Bs</label><input type="number" id="pay-mix-bs" class="form-input" step="0.01" value="'+mitadBs.toFixed(2)+'" oninput="actualizarMixto()"></div>'
+      +'<div id="pay-mix-diff" style="font-size:12px;text-align:center"></div></div>';
+  }
+  else if(id==='punto_venta'){html='<div class="form-group"><label class="form-label">BANCO</label><select id="pay-banco" class="form-input">';BANCOS_VZLA.forEach(function(b){html+='<option>'+b+'</option>';});html+='</select></div><div class="form-group"><label class="form-label">NÚMERO DE TARJETA (últimos 4)</label><input type="text" id="pay-tarjeta" class="form-input" placeholder="****" maxlength="4"></div>';}
+  else if(id==='biopago'){html='<div class="form-group"><label class="form-label">TELÉFONO BIOPAGO</label><input type="tel" id="pay-biopago" class="form-input" placeholder="Número asociado"></div>';}
+  fields.innerHTML=html;
+}
+
+function getCartSubtotalConDesc(){
+  var subtotal=0;_cart.forEach(function(c){subtotal+=c.precio*c.cantidad;});
+  var desc=(parseFloat((gel('chk-descuento')||{}).value)||0)/100;
+  return subtotal*(1-desc);
+}
+
+function actualizarCheckoutTotal(){
+  var total=getCartSubtotalConDesc();
+  var el=gel('chk-total');if(el)el.textContent=formatUSD(total);
+  var bs=gel('chk-total-bs');if(bs)bs.textContent=formatBS(calcBS(total));
+  calcularCambio();calcularCambioBs();
+}
+
+function calcularCambio(){
+  var monto=parseFloat((gel('pay-monto')||{}).value)||0;
+  var total=getCartSubtotalConDesc();
+  var cambio=monto-total;
+  var el=gel('pay-cambio');if(el){el.textContent=formatUSD(Math.max(0,cambio));el.style.color=cambio>=0?'var(--success)':'var(--danger)';}
+}
+
+function calcularCambioBs(){
+  var monto=parseFloat((gel('pay-monto-bs')||{}).value)||0;
+  var total=getCartSubtotalConDesc();
+  var cambio=monto-calcBS(total);
+  var el=gel('pay-cambio-bs');if(el){el.textContent=formatBS(Math.max(0,cambio));el.style.color=cambio>=0?'var(--success)':'var(--danger)';}
+}
+
+function actualizarMixto(){
+  var usd=parseFloat((gel('pay-mix-usd')||{}).value)||0;
+  var bs=parseFloat((gel('pay-mix-bs')||{}).value)||0;
+  var total=getCartSubtotalConDesc();
+  var totalPagado=usd+(bs/(getCfg().tasa||1));
+  var diff=totalPagado-total;
+  var el=gel('pay-mix-diff');
+  if(el){el.innerHTML=diff>=0?'<span style="color:var(--success)">✅ Pago completo — Sobrante: '+formatUSD(diff)+'</span>':'<span style="color:var(--danger)">❌ Faltan: '+formatUSD(Math.abs(diff))+'</span>';}
+}
+
+function confirmarVenta(){
+  if(!_selectedMetodo){toast('⚠️ Selecciona un método de pago','warn');return;}
+  var subtotal=0;_cart.forEach(function(c){subtotal+=c.precio*c.cantidad;});
+  var desc=(parseFloat((gel('chk-descuento')||{}).value)||0)/100;
+  var total=subtotal*(1-desc);
+  var metodoInfo=METODOS_PAGO.find(function(m){return m.id===_selectedMetodo;});
+  var venta={
+    id:genId(),numero:String(getVentas().length+1).padStart(4,'0'),fecha:Date.now(),
+    items:_cart.map(function(c){return{id:c.id,nombre:c.nombre,codigo:c.codigo||'',precio:c.precio,cantidad:c.cantidad,marca:c.marca,modelo:c.modelo};}),
+    subtotal:subtotal,descuento:desc*100,total:total,
+    metodo:_selectedMetodo,metodoNombre:metodoInfo?metodoInfo.nombre:'Otro',
+    tasa:getCfg().tasa||50
+  };
+  // Descuentar stock
+  var prods=getProductos();
+  _cart.forEach(function(c){var p=prods.find(function(x){return x.id===c.id;});if(p)p.stock=Math.max(0,p.stock-c.cantidad);});
+  setProductos(prods);
+
+  // Registrar venta
+  var ventas=getVentas();ventas.push(venta);setVentas(ventas);
+
+  // Registrar movimiento en caja
+  var movs=getCajaMovs();movs.push({id:genId(),fecha:Date.now(),tipo:'ingreso',monto:total,concepto:'Venta #'+venta.numero,metodo:_selectedMetodo});setCajaMovs(movs);
+
+  _cart=[];renderCart();
+  cerrarModal('modal-checkout');
+  mostrarRecibo(venta);
+  toast('✅ Venta registrada exitosamente','ok');
+}
+
+function mostrarRecibo(venta){
+  _lastRecibo=venta;
+  var cfg=getCfg();
+  var html='<div class="receipt" id="recibo-print">'
+    +'<div class="receipt-header">'
+    +'<div style="font-size:18px;font-weight:800">🏍️ '+cfg.nombre+'</div>'
+    +(cfg.direccion?'<div>'+cfg.direccion+'</div>':'')
+    +(cfg.telefono?'<div>Tel: '+cfg.telefono+'</div>':'')
+    +(cfg.rif?'<div>RIF: '+cfg.rif+'</div>':'')
+    +'</div>'
+    +'<div style="margin:8px 0;font-size:11px"><strong>Factura:</strong> #'+venta.numero+'<br><strong>Fecha:</strong> '+formatDate(venta.fecha)+'<br><strong>Método:</strong> '+venta.metodoNombre+(venta.tasa?'<br><strong>Tasa:</strong> Bs '+venta.tasa.toFixed(2)+'/$':'')+'</div>'
+    +'<div class="receipt-items">';
+  venta.items.forEach(function(it){html+='<div class="receipt-item"><span>'+it.nombre+' x'+it.cantidad+'</span><span>'+formatUSD(it.precio*it.cantidad)+'</span></div>';});
+  html+='</div>'
+    +'<div class="receipt-total">'
+    +'<div class="receipt-item"><span>Subtotal:</span><span>'+formatUSD(venta.subtotal)+'</span></div>';
+  if(venta.descuento>0)html+='<div class="receipt-item"><span>Descuento ('+venta.descuento+'%):</span><span>-'+formatUSD(venta.subtotal*venta.descuento/100)+'</span></div>';
+  html+='<div class="receipt-item" style="font-weight:800;font-size:14px"><span>TOTAL:</span><span>'+formatUSD(venta.total)+'</span></div>'
+    +'<div class="receipt-item"><span>Equivale en Bs:</span><span>'+formatBS(venta.total*venta.tasa)+'</span></div>'
+    +'</div>'
+    +'<div class="receipt-footer">¡Gracias por su compra! 🏍️</div>'
+    +'</div>';
+  gel('recibo-body').innerHTML=html;
+  abrirModal('modal-recibo');
+}
+
+function imprimirRecibo(){window.print();}
+
+function enviarReciboWhatsApp(){
+  if(!_lastRecibo)return;
+  var cfg=getCfg();var v=_lastRecibo;
+  var msg='🏍️ *'+cfg.nombre+'*\n';
+  msg+='📋 *Factura: #'+v.numero+'*\n';
+  msg+='📅 '+formatDate(v.fecha)+'\n';
+  msg+='💰 Método: '+v.metodoNombre+'\n\n';
+  msg+='📦 *Detalle:*\n';
+  v.items.forEach(function(it){msg+='• '+it.nombre+' x'+it.cantidad+' = '+formatUSD(it.precio*it.cantidad)+'\n';});
+  if(v.descuento>0)msg+='\n🏷️ Descuento: '+v.descuento+'%\n';
+  msg+='\n💵 *TOTAL: '+formatUSD(v.total)+'*\n';
+  msg+='💲 Equivale: '+formatBS(v.total*v.tasa)+'\n\n';
+  msg+='¡Gracias por su compra! 🏍️';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+
+// ═══════════════════════════════════════════
+// INVENTARIO
+// ═══════════════════════════════════════════
+function renderInventario(){
+  var prods=getProductos();
+  var busq=((gel('inv-buscar')||{}).value||'').toLowerCase();
+  var catF=(gel('inv-cat-filter')||{}).value||'';
+  var marcaF=(gel('inv-marca-filter')||{}).value||'';
+  // Fill filters
+  var catSel=gel('inv-cat-filter');
+  if(catSel&&catSel.options.length<=1){
+    CATEGORIAS.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;catSel.appendChild(o);});
+  }
+  var marSel=gel('inv-marca-filter');
+  if(marSel&&marSel.options.length<=1){Object.keys(MARCAS_MOTOS).forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;marSel.appendChild(o);});}
+
+  var filtered=prods.filter(function(p){
+    if(busq){var found=p.nombre.toLowerCase().indexOf(busq)>=0||p.codigo.toLowerCase().indexOf(busq)>=0||(p.modelo||'').toLowerCase().indexOf(busq)>=0||(p.marca||'').toLowerCase().indexOf(busq)>=0;if(!found)return false;}
+    if(catF&&p.categoria!==catF)return false;
+    if(marcaF&&p.marca!==marcaF)return false;
+    return true;
+  });
+  var cont=gel('inv-table-container');
+  if(!filtered.length){cont.innerHTML='<div class="empty-state"><i class="fas fa-box-open" style="font-size:32px;display:block;margin-bottom:8px"></i>No hay productos registrados</div>';return;}
+  var html='<table class="data-table"><thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Moto</th><th>Precio $</th><th>Precio Bs</th><th>Stock</th><th>Acciones</th></tr></thead><tbody>';
+  filtered.forEach(function(p){
+    var stockBadge=p.stock<=(p.stockMin||0)?'<span class="badge badge-red">'+p.stock+'</span>':p.stock<=10?'<span class="badge badge-gold">'+p.stock+'</span>':'<span class="badge badge-green">'+p.stock+'</span>';
+    html+='<tr>'
+      +'<td class="font-mono" style="font-size:11px">'+p.codigo+'</td>'
+      +'<td style="font-weight:600">'+p.nombre+'</td>'
+      +'<td><span class="badge badge-blue">'+(p.categoria||'—')+'</span></td>'
+      +'<td style="font-size:12px;color:var(--text2)">'+(p.marca?p.marca:'')+(p.modelo?' '+p.modelo:'')+'</td>'
+      +'<td class="font-mono text-orange fw700">'+formatUSD(p.precio)+'</td>'
+      +'<td class="font-mono text-green" style="font-size:11px">'+formatBS(calcBS(p.precio))+'</td>'
+      +'<td>'+stockBadge+'</td>'
+      +'<td><div class="flex gap-8">'
+      +'<button class="btn btn-sm btn-secondary" onclick="editarProducto(\''+p.id+'\')"><i class="fas fa-pen"></i></button>'
+      +'<button class="btn btn-sm btn-danger" onclick="eliminarProducto(\''+p.id+'\')"><i class="fas fa-trash"></i></button>'
+      +'</div></td></tr>';
+  });
+  html+='</tbody></table>';
+  cont.innerHTML=html;
+}
+
+function abrirModalProducto(prodId){
+  var catSel=gel('prod-categoria');catSel.innerHTML='<option value="">Seleccionar...</option>';
+  CATEGORIAS.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;catSel.appendChild(o);});
+  var marSel=gel('prod-marca');marSel.innerHTML='<option value="">Todas</option><option value="Universal">Universal</option>';
+  Object.keys(MARCAS_MOTOS).forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;marSel.appendChild(o);});
+  gel('prod-modelo').innerHTML='<option value="">Todos</option>';
+  gel('prod-id').value='';
+  gel('prod-codigo').value='';gel('prod-nombre').value='';gel('prod-categoria').value='';
+  gel('prod-marca').value='';gel('prod-modelo').value='';gel('prod-precio').value='';
+  gel('prod-stock').value='';gel('prod-stockmin').value='3';gel('prod-desc').value='';
+  gel('prod-precio-bs').textContent='Bs 0.00';
+  gel('modal-prod-title').textContent='Agregar Producto';
+  // Listener para precio BS
+  gel('prod-precio').oninput=function(){var v=parseFloat(this.value)||0;gel('prod-precio-bs').textContent=formatBS(calcBS(v));};
+  if(prodId){
+    var p=getProductos().find(function(x){return x.id===prodId;});
+    if(p){gel('prod-id').value=p.id;gel('prod-codigo').value=p.codigo;gel('prod-nombre').value=p.nombre;gel('prod-categoria').value=p.categoria;
+    gel('prod-marca').value=p.marca||'';actualizarModelos();setTimeout(function(){gel('prod-modelo').value=p.modelo||'';},50);
+    gel('prod-precio').value=p.precio;gel('prod-stock').value=p.stock;gel('prod-stockmin').value=p.stockMin||3;gel('prod-desc').value=p.desc||'';
+    gel('prod-precio-bs').textContent=formatBS(calcBS(p.precio));gel('modal-prod-title').textContent='Editar Producto';}
+  }
+  abrirModal('modal-producto');
+}
+
+function editarProducto(id){abrirModalProducto(id);}
+
+function actualizarModelos(){
+  var marca=(gel('prod-marca')||{}).value||'';
+  var sel=gel('prod-modelo');sel.innerHTML='<option value="">Todos</option>';
+  if(marca&&MARCAS_MOTOS[marca]){
+    MARCAS_MOTOS[marca].forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;sel.appendChild(o);});
+  }
+}
+
+function guardarProducto(){
+  var id=(gel('prod-id')||{}).value||'';
+  var codigo=(gel('prod-codigo')||{}).value||'';
+  var nombre=(gel('prod-nombre')||{}).value||'';
+  var categoria=(gel('prod-categoria')||{}).value||'';
+  var marca=(gel('prod-marca')||{}).value||'';
+  var modelo=(gel('prod-modelo')||{}).value||'';
+  var precio=parseFloat((gel('prod-precio')||{}).value)||0;
+  var stock=parseInt((gel('prod-stock')||{}).value)||0;
+  var stockMin=parseInt((gel('prod-stockmin')||{}).value)||3;
+  var desc=(gel('prod-desc')||{}).value||'';
+  if(!codigo||!nombre||!categoria){toast('⚠️ Completa código, nombre y categoría','warn');return;}
+  if(precio<=0){toast('⚠️ El precio debe ser mayor a 0','warn');return;}
+  var prods=getProductos();
+  if(id){
+    var idx=prods.findIndex(function(p){return p.id===id;});
+    if(idx>=0){prods[idx]={id:id,codigo:codigo,nombre:nombre,categoria:categoria,marca:marca,modelo:modelo,precio:precio,stock:stock,stockMin:stockMin,desc:desc};}
+  }else{
+    prods.push({id:genId(),codigo:codigo,nombre:nombre,categoria:categoria,marca:marca,modelo:modelo,precio:precio,stock:stock,stockMin:stockMin,desc:desc});
+  }
+  setProductos(prods);cerrarModal('modal-producto');renderInventario();
+  toast(id?'✅ Producto actualizado':'✅ Producto agregado','ok');
+}
+
+function eliminarProducto(id){
+  if(!confirm('¿Eliminar este producto?'))return;
+  var prods=getProductos().filter(function(p){return p.id!==id;});
+  setProductos(prods);renderInventario();toast('Producto eliminado','warn');
+}
+
+// ═══════════════════════════════════════════
+// CLIENTES
+// ═══════════════════════════════════════════
+function renderClientes(){
+  var clientes=getClientes();
+  var busq=((gel('cli-buscar')||{}).value||'').toLowerCase();
+  var filtered=clientes.filter(function(c){
+    if(!busq)return true;
+    return c.nombre.toLowerCase().indexOf(busq)>=0||(c.telefono||'').indexOf(busq)>=0||(c.email||'').toLowerCase().indexOf(busq)>=0;
+  });
+  var cont=gel('cli-table-container');
+  if(!filtered.length){cont.innerHTML='<div class="empty-state"><i class="fas fa-users" style="font-size:32px;display:block;margin-bottom:8px"></i>No hay clientes registrados</div>';return;}
+  // Calculate totals per client
+  var ventas=getVentas();
+  var html='<table class="data-table"><thead><tr><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Dirección</th><th>Compras</th><th>Total</th><th>Acciones</th></tr></thead><tbody>';
+  filtered.forEach(function(c){
+    var cliVtas=ventas.filter(function(v){return v.clienteId===c.id;});
+    var total=cliVtas.reduce(function(a,v){return a+(v.total||0);},0);
+    var waBtn=c.telefono?'<button class="btn btn-sm btn-success" onclick="enviarWACliente(\''+(c.telefono||'').replace(/'/g,"\\'")+'\')"><i class="fab fa-whatsapp"></i></button>':'';
+    html+='<tr>'
+      +'<td style="font-weight:600">'+c.nombre+'</td>'
+      +'<td style="font-size:12px">'+(c.telefono||'—')+'</td>'
+      +'<td style="font-size:12px;color:var(--text2)">'+(c.email||'—')+'</td>'
+      +'<td style="font-size:12px;color:var(--text3)">'+(c.direccion||'—')+'</td>'
+      +'<td class="text-center"><span class="badge badge-blue">'+cliVtas.length+'</span></td>'
+      +'<td class="font-mono text-orange">'+formatUSD(total)+'</td>'
+      +'<td><div class="flex gap-8">'
+      +'<button class="btn btn-sm btn-secondary" onclick="editarCliente(\''+c.id+'\')"><i class="fas fa-pen"></i></button>'
+      +waBtn
+      +'<button class="btn btn-sm btn-danger" onclick="eliminarCliente(\''+c.id+'\')"><i class="fas fa-trash"></i></button>'
+      +'</div></td></tr>';
+  });
+  html+='</tbody></table>';
+  cont.innerHTML=html;
+}
+
+function abrirModalCliente(cliId){
+  gel('cli-id').value='';gel('cli-nombre').value='';gel('cli-telefono').value='';gel('cli-email').value='';gel('cli-direccion').value='';gel('cli-notas').value='';
+  gel('modal-cli-title').textContent='Agregar Cliente';
+  if(cliId){
+    var c=getClientes().find(function(x){return x.id===cliId;});
+    if(c){gel('cli-id').value=c.id;gel('cli-nombre').value=c.nombre;gel('cli-telefono').value=c.telefono||'';gel('cli-email').value=c.email||'';gel('cli-direccion').value=c.direccion||'';gel('cli-notas').value=c.notas||'';gel('modal-cli-title').textContent='Editar Cliente';}
+  }
+  abrirModal('modal-cliente');
+}
+
+function editarCliente(id){abrirModalCliente(id);}
+
+function guardarCliente(){
+  var id=(gel('cli-id')||{}).value||'';
+  var nombre=(gel('cli-nombre')||{}).value||'';
+  var telefono=(gel('cli-telefono')||{}).value||'';
+  var email=(gel('cli-email')||{}).value||'';
+  var direccion=(gel('cli-direccion')||{}).value||'';
+  var notas=(gel('cli-notas')||{}).value||'';
+  if(!nombre.trim()){toast('⚠️ Ingresa el nombre del cliente','warn');return;}
+  var clientes=getClientes();
+  if(id){var idx=clientes.findIndex(function(c){return c.id===id;});if(idx>=0){clientes[idx]={id:id,nombre:nombre.trim(),telefono:telefono,email:email,direccion:direccion,notas:notas,ts:Date.now()};}}
+  else{clientes.push({id:genId(),nombre:nombre.trim(),telefono:telefono,email:email,direccion:direccion,notas:notas,ts:Date.now()});}
+  setClientes(clientes);cerrarModal('modal-cliente');renderClientes();
+  toast(id?'✅ Cliente actualizado':'✅ Cliente agregado','ok');
+}
+
+function eliminarCliente(id){
+  if(!confirm('¿Eliminar este cliente?'))return;
+  setClientes(getClientes().filter(function(c){return c.id!==id;}));
+  renderClientes();toast('Cliente eliminado','warn');
+}
+
+function enviarWACliente(tel){
+  if(!tel)return;
+  var clean=tel.replace(/[^0-9]/g,'');
+  if(clean.length<10)clean='58'+clean;
+  if(!clean.startsWith('58'))clean='58'+clean;
+  window.open('https://wa.me/'+clean,'_blank');
+}
+
+// ═══════════════════════════════════════════
+// VENTAS
+// ═══════════════════════════════════════════
+function renderVentas(){
+  var ventas=getVentas();
+  var desde=gel('ventas-fecha-desde')?new Date(gel('ventas-fecha-desde').value).getTime():0;
+  var hasta=gel('ventas-fecha-hasta')?new Date(gel('ventas-fecha-hasta').value).getTime()+86400000:Infinity;
+  var metodoF=(gel('ventas-metodo-filter')||{}).value||'';
+  // Fill method filter
+  var mSel=gel('ventas-metodo-filter');
+  if(mSel&&mSel.options.length<=1){METODOS_PAGO.forEach(function(m){var o=document.createElement('option');o.value=m.id;o.textContent=m.nombre;mSel.appendChild(o);});}
+
+  var filtered=ventas.filter(function(v){
+    if(v.fecha<desde||v.fecha>hasta)return false;
+    if(metodoF&&v.metodo!==metodoF)return false;
+    return true;
+  }).reverse();
+  var cont=gel('ventas-table-container');
+  if(!filtered.length){cont.innerHTML='<div class="empty-state"><i class="fas fa-receipt" style="font-size:32px;display:block;margin-bottom:8px"></i>No hay ventas en este período</div>';return;}
+  var html='<table class="data-table"><thead><tr><th>#</th><th>Fecha</th><th>Items</th><th>Método</th><th>Total $</th><th>Total Bs</th><th>Acciones</th></tr></thead><tbody>';
+  filtered.forEach(function(v){
+    var metodoObj=METODOS_PAGO.find(function(m){return m.id===v.metodo;});
+    var metodoBadge=metodoObj?'<span class="badge badge-blue"><i class="fas '+metodoObj.icon+'"></i> '+metodoObj.nombre+'</span>':'<span class="badge">'+v.metodo+'</span>';
+    html+='<tr>'
+      +'<td class="font-mono fw700">#'+v.numero+'</td>'
+      +'<td style="font-size:12px">'+formatDate(v.fecha)+'</td>'
+      +'<td style="font-size:12px">'+(v.items?v.items.length:0)+' productos</td>'
+      +'<td>'+metodoBadge+'</td>'
+      +'<td class="font-mono text-orange fw700">'+formatUSD(v.total)+'</td>'
+      +'<td class="font-mono text-green">'+formatBS(calcBS(v.total))+'</td>'
+      +'<td><div class="flex gap-8">'
+      +'<button class="btn btn-sm btn-secondary" onclick="verDetalleVenta(\''+v.id+'\')"><i class="fas fa-eye"></i></button>'
+      +'<button class="btn btn-sm btn-success" onclick="reenviarRecibo(\''+v.id+'\')"><i class="fab fa-whatsapp"></i></button>'
+      +'</div></td></tr>';
+  });
+  html+='</tbody></table>';
+  cont.innerHTML=html;
+}
+
+function verDetalleVenta(id){
+  var v=getVentas().find(function(x){return x.id===id;});
+  if(!v)return;
+  var html='<div style="font-size:13px">'
+    +'<div class="flex justify-between mb-8"><span class="text-muted">Factura:</span><span class="font-mono fw700">#'+v.numero+'</span></div>'
+    +'<div class="flex justify-between mb-8"><span class="text-muted">Fecha:</span><span>'+formatDate(v.fecha)+'</span></div>'
+    +'<div class="flex justify-between mb-8"><span class="text-muted">Método:</span><span>'+(v.metodoNombre||v.metodo)+'</span></div>'
+    +'<div class="flex justify-between mb-16"><span class="text-muted">Tasa:</span><span class="font-mono">Bs '+v.tasa.toFixed(2)+'/$</span></div>'
+    +'<div style="border-top:1px solid var(--border2);padding-top:12px">';
+  v.items.forEach(function(it){
+    html+='<div class="flex justify-between mb-8"><span>'+it.nombre+' x'+it.cantidad+'</span><span class="font-mono">'+formatUSD(it.precio*it.cantidad)+'</span></div>';
+  });
+  html+='</div><div style="border-top:1px solid var(--border2);padding-top:12px">';
+  if(v.descuento>0)html+='<div class="flex justify-between mb-8"><span>Descuento ('+v.descuento+'%)</span><span class="font-mono text-red">-'+formatUSD(v.subtotal*v.descuento/100)+'</span></div>';
+  html+='<div class="flex justify-between fw800" style="font-size:16px"><span>TOTAL:</span><span class="text-orange font-mono">'+formatUSD(v.total)+'</span></div>'
+    +'<div class="flex justify-between mt-8"><span>En Bolívares:</span><span class="text-green font-mono">'+formatBS(v.total*v.tasa)+'</span></div>'
+    +'</div></div>';
+  gel('venta-det-body').innerHTML=html;
+  abrirModal('modal-venta-det');
+}
+
+function reenviarRecibo(id){
+  var v=getVentas().find(function(x){return x.id===id;});
+  if(v){mostrarRecibo(v);}
+}
+
+// ═══════════════════════════════════════════
+// MARCAS / MODELOS
+// ═══════════════════════════════════════════
+function renderMarcas(){
+  var busq=((gel('motos-buscar')||{}).value||'').toLowerCase();
+  var grid=gel('motos-grid');
+  var prods=getProductos();
+  var html='';
+  Object.keys(MARCAS_MOTOS).forEach(function(brand){
+    if(busq&&brand.toLowerCase().indexOf(busq)<0)return;
+    var modelos=MARCAS_MOTOS[brand];
+    var prodCount=prods.filter(function(p){return p.marca===brand;}).length;
+    html+='<div class="moto-brand-card">'
+      +'<h4><i class="fas fa-motorcycle text-orange"></i> '+brand+'</h4>'
+      +'<div class="count">'+modelos.length+' modelos'+(prodCount?' · <span class="text-green">'+prodCount+' productos</span>':'')+'</div>'
+      +'<div style="margin-top:8px;font-size:11px;color:var(--text2);line-height:1.6">'+modelos.slice(0,5).join(', ')+(modelos.length>5?' +'+(modelos.length-5)+' más':'')+'</div>'
+      +'</div>';
+  });
+  grid.innerHTML=html||'<div class="empty-state">No se encontraron marcas</div>';
+}
+
+// ═══════════════════════════════════════════
+// CAJA
+// ═══════════════════════════════════════════
+function renderCaja(){
+  var movs=getCajaMovs();
+  var hoy=new Date();hoy.setHours(0,0,0,0);var hoyTs=hoy.getTime();
+  var movsHoy=movs.filter(function(m){return m.fecha>=hoyTs;});
+  var ingresos=movsHoy.filter(function(m){return m.tipo==='ingreso';}).reduce(function(a,m){return a+(m.monto||0);},0);
+  var gastos=movsHoy.filter(function(m){return m.tipo==='gasto';}).reduce(function(a,m){return a+(m.monto||0);},0);
+  gel('caja-saldo').textContent=formatBS(calcBS(ingresos-gastos));
+  gel('caja-ingresos').textContent=formatUSD(ingresos);
+  gel('caja-gastos').textContent=formatUSD(gastos);
+
+  var cont=gel('caja-table-container');
+  var sorted=movsHoy.slice().reverse();
+  if(!sorted.length){cont.innerHTML='<div class="empty-state">Sin movimientos hoy</div>';return;}
+  var html='<table class="data-table"><thead><tr><th>Hora</th><th>Tipo</th><th>Concepto</th><th>Monto $</th><th>Monto Bs</th></tr></thead><tbody>';
+  sorted.forEach(function(m){
+    var tipoBadge=m.tipo==='ingreso'?'<span class="badge badge-green"><i class="fas fa-arrow-up"></i> Ingreso</span>':'<span class="badge badge-red"><i class="fas fa-arrow-down"></i> Gasto</span>';
+    html+='<tr>'
+      +'<td class="font-mono" style="font-size:11px">'+new Date(m.fecha).toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'})+'</td>'
+      +'<td>'+tipoBadge+'</td>'
+      +'<td style="font-size:12px">'+(m.concepto||'—')+'</td>'
+      +'<td class="font-mono '+(m.tipo==='ingreso'?'text-green':'text-red')+'">'+(m.tipo==='ingreso'?'+':'-')+formatUSD(m.monto)+'</td>'
+      +'<td class="font-mono" style="font-size:11px">'+formatBS(calcBS(m.monto))+'</td>'
+      +'</tr>';
+  });
+  html+='</tbody></table>';
+  cont.innerHTML=html;
+}
+
+function abrirMovimientoCaja(tipo){
+  gel('caja-mov-tipo').value=tipo;
+  gel('caja-mov-title').textContent=tipo==='ingreso'?'Registrar Ingreso':'Registrar Gasto';
+  gel('caja-mov-monto').value='';gel('caja-mov-concepto').value='';
+  abrirModal('modal-caja-mov');
+}
+
+function guardarMovimientoCaja(){
+  var tipo=(gel('caja-mov-tipo')||{}).value;
+  var monto=parseFloat((gel('caja-mov-monto')||{}).value)||0;
+  var concepto=(gel('caja-mov-concepto')||{}).value||'';
+  if(monto<=0){toast('⚠️ Ingresa un monto válido','warn');return;}
+  if(!concepto.trim()){toast('⚠️ Ingresa un concepto','warn');return;}
+  var movs=getCajaMovs();
+  movs.push({id:genId(),fecha:Date.now(),tipo:tipo,monto:monto,concepto:concepto});
+  setCajaMovs(movs);cerrarModal('modal-caja-mov');renderCaja();
+  toast('✅ Movimiento registrado','ok');
+}
+
+// ═══════════════════════════════════════════
+// REPORTES
+// ═══════════════════════════════════════════
+function renderReportes(){
+  var ventas=getVentas();
+  var desde=gel('rep-desde')&&gel('rep-desde').value?new Date(gel('rep-desde').value).getTime():0;
+  var hasta=gel('rep-hasta')&&gel('rep-hasta').value?new Date(gel('rep-hasta').value).getTime()+86400000:Infinity;
+  var filtered=ventas.filter(function(v){return v.fecha>=desde&&v.fecha<=hasta;});
+  var totalUSD=filtered.reduce(function(a,v){return a+(v.total||0);},0);
+  gel('rep-total-usd').textContent=formatUSD(totalUSD);
+  gel('rep-total-bs').textContent=formatBS(calcBS(totalUSD));
+  gel('rep-total-ventas').textContent=filtered.length;
+
+  // Top productos
+  var conteo={};
+  filtered.forEach(function(v){(v.items||[]).forEach(function(it){if(conteo[it.nombre])conteo[it.nombre]+=it.cantidad;else conteo[it.nombre]=it.cantidad;});});
+  var top=Object.entries(conteo).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  var topHtml='';
+  if(top.length){top.forEach(function(t,i){var pct=parseInt((t[1]/filtered.reduce(function(a,v){return a+(v.items||[]).reduce(function(b,it){return b+it.cantidad;},0);},0))*100);
+    topHtml+='<div style="margin-bottom:8px"><div class="flex justify-between mb-8"><span style="font-size:12px;font-weight:600">'+(i+1)+'. '+t[0]+'</span><span class="font-mono text-orange" style="font-size:11px">'+t[1]+'</span></div><div style="height:4px;background:var(--border2);border-radius:2px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:var(--orange);border-radius:2px;transition:width .3s"></div></div></div>';});}
+  else{topHtml='<div class="empty-state">Sin datos</div>';}
+  gel('rep-top-productos').innerHTML=topHtml;
+
+  // Por método
+  var metodos={};
+  filtered.forEach(function(v){var m=v.metodoNombre||v.metodo;if(metodos[m])metodos[m]+=v.total||0;else metodos[m]=v.total||0;});
+  var metHtml='';
+  Object.entries(metodos).sort(function(a,b){return b[1]-a[1];}).forEach(function(e){
+    metHtml+='<div class="flex justify-between mb-8"><span style="font-size:12px">'+e[0]+'</span><span class="font-mono text-green">'+formatUSD(e[1])+'</span></div>';
+  });
+  if(!metHtml)metHtml='<div class="empty-state">Sin datos</div>';
+  gel('rep-metodos').innerHTML=metHtml;
+
+  // Chart
+  drawChart(filtered);
+}
+
+function drawChart(ventas){
+  var canvas=gel('chart-ventas');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var dpr=window.devicePixelRatio||1;
+  var rect=canvas.getBoundingClientRect();
+  canvas.width=rect.width*dpr;canvas.height=200*dpr;
+  ctx.scale(dpr,dpr);
+  var w=rect.width;var h=200;
+  ctx.clearRect(0,0,w,h);
+
+  // Group by day
+  var dias={};
+  ventas.forEach(function(v){var d=new Date(v.fecha).toLocaleDateString('es-VE',{day:'2-digit',month:'short'});if(dias[d])dias[d]+=v.total||0;else dias[d]=v.total||0;});
+  var entries=Object.entries(dias);
+  if(!entries.length){ctx.fillStyle='#5f6368';ctx.font='13px Inter';ctx.textAlign='center';ctx.fillText('Sin datos para el período seleccionado',w/2,h/2);return;}
+
+  var maxVal=Math.max.apply(null,entries.map(function(e){return e[1];}))||1;
+  var barW=Math.min(40,Math.max(20,(w-60)/entries.length-8));
+  var chartH=h-40;
+  var startX=(w-entries.length*(barW+8))/2;
+
+  entries.forEach(function(e,i){
+    var barH=Math.max(2,(e[1]/maxVal)*(chartH-20));
+    var x=startX+i*(barW+8);
+    var y=chartH-barH;
+    // Bar
+    var grad=ctx.createLinearGradient(x,y,x,chartH);
+    grad.addColorStop(0,'#ff6b35');grad.addColorStop(1,'#ff8c00');
+    ctx.fillStyle=grad;
+    ctx.beginPath();ctx.roundRect(x,y,barW,barH,4);ctx.fill();
+    // Value
+    ctx.fillStyle='#e8eaed';ctx.font='bold 10px JetBrains Mono';ctx.textAlign='center';
+    ctx.fillText('$'+e[1].toFixed(0),x+barW/2,y-5);
+    // Label
+    ctx.fillStyle='#5f6368';ctx.font='10px Inter';
+    ctx.fillText(e[0],x+barW/2,chartH+15);
+  });
+}
+
+// ═══════════════════════════════════════════
+// CONFIGURACIÓN
+// ═══════════════════════════════════════════
+function loadConfig(){
+  var cfg=getCfg();
+  gel('cfg-nombre').value=cfg.nombre||'';
+  gel('cfg-telefono').value=cfg.telefono||'';
+  gel('cfg-direccion').value=cfg.direccion||'';
+  gel('cfg-email').value=cfg.email||'';
+  gel('cfg-rif').value=cfg.rif||'';
+  gel('cfg-tasa').value=cfg.tasa||50;
+  var lic=db.get('licencia_activa');
+  if(lic){
+    var tipoStr=lic.tipo==='PRO'?'<span class="text-gold fw700">● PRO</span>':'<span style="color:var(--warn)">● DEMO</span>';
+    var info='<div style="font-size:12px;line-height:1.8">'
+      +'<div class="flex justify-between"><span class="text-muted">Tipo:</span>'+tipoStr+'</div>'
+      +'<div class="flex justify-between"><span class="text-muted">Código:</span><span class="font-mono" style="font-size:10px">'+lic.code+'</span></div>'
+      +'<div class="flex justify-between"><span class="text-muted">Device:</span><span class="font-mono" style="font-size:10px">'+(lic.device||'—')+'</span></div>'
+      +'<div class="flex justify-between"><span class="text-muted">Activado:</span><span>'+formatDate(lic.activado)+'</span></div>'
+      +(lic.expiry?'<div class="flex justify-between"><span class="text-muted">Expira:</span><span class="text-red">'+formatDate(lic.expiry)+'</span></div>':'')
+      +'</div>';
+    gel('config-lic-info').innerHTML=info;
+  }else{gel('config-lic-info').innerHTML='<div class="text-muted" style="font-size:12px">Sin licencia activa</div>';}
+}
+
+function guardarConfig(){
+  var cfg={
+    nombre:(gel('cfg-nombre')||{}).value||'Mi Moto Repuestos',
+    telefono:(gel('cfg-telefono')||{}).value||'',
+    direccion:(gel('cfg-direccion')||{}).value||'',
+    email:(gel('cfg-email')||{}).value||'',
+    rif:(gel('cfg-rif')||{}).value||'',
+    tasa:parseFloat((gel('cfg-tasa')||{}).value)||50
+  };
+  saveCfg(cfg);toast('✅ Configuración guardada','ok');
+}
+
+function guardarAdminPW(){
+  var pw=(gel('cfg-admin-pw')||{}).value||'';
+  if(!pw||pw.length<4){toast('⚠️ La clave debe tener al menos 4 caracteres','warn');return;}
+  db.set('admin_pw',pw);
+  gel('cfg-admin-pw').value='';toast('✅ Clave admin actualizada','ok');
+}
+
+function mostrarInfoLicencia(){
+  var lic=db.get('licencia_activa');
+  var devId=getDeviceId();
+  var msg='🏍️ *Repuestos de Motos Pro — Info de Licencia*\n\n'
+    +'📦 Tipo: '+(lic?lic.tipo:'Sin licencia')+'\n'
+    +'🔑 Código: '+(lic?lic.code:'—')+'\n'
+    +'📱 Device ID: '+devId+'\n'
+    +(lic&&lic.expiry?'⏰ Expira: '+formatDate(lic.expiry)+'\n':'')
+    +(lic&&lic.activado?'✅ Activado: '+formatDate(lic.activado)+'\n':'');
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+function resetearDatos(){
+  if(!confirm('⚠️ ¿ELIMINAR TODOS LOS DATOS? Esta acción no se puede deshacer.\n\nSe eliminarán: productos, clientes, ventas, caja, configuración.'))return;
+  if(!confirm('🔴 ¿Estás SEGURO? Escribe OK en el próximo cuadro.'))return;
+  var keys=['productos','clientes','ventas','caja_movs','config','cuenta','licencia_activa'];
+  keys.forEach(function(k){db.remove(k);});
+  toast('Datos eliminados. Recargando...','warn');
+  setTimeout(function(){location.reload();},2000);
+}
+
+function exportarDatos(){
+  var data={
+    productos:getProductos(),clientes:getClientes(),ventas:getVentas(),
+    caja_movs:getCajaMovs(),config:getCfg(),exportDate:Date.now(),version:'RMP-1.0'
+  };
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='repuestos-motos-pro-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();toast('📤 Datos exportados','ok');
+}
+
+function importarDatos(){gel('import-file').click();}
+function procesarImportar(e){
+  var file=e.target.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      var data=JSON.parse(ev.target.result);
+      if(!data.version){toast('❌ Archivo de backup inválido','err');return;}
+      if(!confirm('¿Importar datos? Los datos actuales serán reemplazados.'))return;
+      if(data.productos)setProductos(data.productos);
+      if(data.clientes)setClientes(data.clientes);
+      if(data.ventas)setVentas(data.ventas);
+      if(data.caja_movs)setCajaMovs(data.caja_movs);
+      if(data.config)saveCfg(data.config);
+      toast('✅ Datos importados exitosamente','ok');
+      setTimeout(function(){location.reload();},1500);
+    }catch(err){toast('❌ Error al leer archivo','err');}
+  };
+  reader.readAsText(file);
+}
+
+
+// ═══════════════════════════════════════════
+// SAMPLE DATA
+// ═══════════════════════════════════════════
+function cargarDatosEjemplo(){
+  if(getProductos().length>0)return;
+  var prods=[
+    // Motor y Transmisión
+    {codigo:'MOT-001',nombre:'Pistón Honda CG125 Standard',categoria:'Motor y Transmisión',marca:'Honda',modelo:'CG125',precio:12.50,stock:25,stockMin:5,desc:'Pistón estándar para Honda CG125'},
+    {codigo:'MOT-002',nombre:'Kit Anillos Honda CG125',categoria:'Motor y Transmisión',marca:'Honda',modelo:'CG125',precio:5.00,stock:40,stockMin:10,desc:'Kit de anillos completo'},
+    {codigo:'MOT-003',nombre:'Cilindro Yamaha YBR125',categoria:'Motor y Transmisión',marca:'Yamaha',modelo:'YBR125',precio:18.00,stock:15,stockMin:5,desc:'Cilindro estándar YBR125'},
+    {codigo:'MOT-004',nombre:'Cadena 520 Honda XR150',categoria:'Motor y Transmisión',marca:'Honda',modelo:'XR150L',precio:8.50,stock:30,stockMin:8,desc:'Cadena de transmisión 520 eslabones'},
+    {codigo:'MOT-005',nombre:'Piñón Delantero 14T Honda CG125',categoria:'Motor y Transmisión',marca:'Honda',modelo:'CG125',precio:6.00,stock:20,stockMin:5,desc:'Piñón delantero 14 dientes'},
+    {codigo:'MOT-006',nombre:'Corona Trasera 42T Honda CG125',categoria:'Motor y Transmisión',marca:'Honda',modelo:'CG125',precio:10.00,stock:15,stockMin:5,desc:'Corona trasera 42 dientes'},
+    {codigo:'MOT-007',nombre:'Kit Embrague Bajaj Pulsar 150',categoria:'Motor y Transmisión',marca:'Bajaj',modelo:'Pulsar 150',precio:14.00,stock:12,stockMin:4,desc:'Kit completo de embrague'},
+    {codigo:'MOT-008',nombre:'Válvula Suzuki GN125',categoria:'Motor y Transmisión',marca:'Suzuki',modelo:'GN125',precio:7.50,stock:18,stockMin:5,desc:'Válvula de admisión/escape'},
+    // Eléctrico
+    {codigo:'ELE-001',nombre:'CDI Honda CG125',categoria:'Eléctrico',marca:'Honda',modelo:'CG125',precio:15.00,stock:20,stockMin:5,desc:'Unidad CDI para encendido'},
+    {codigo:'ELE-002',nombre:'Estator Yamaha YBR125',categoria:'Eléctrico',marca:'Yamaha',modelo:'YBR125',precio:22.00,stock:12,stockMin:4,desc:'Estator magnético completo'},
+    {codigo:'ELE-003',nombre:'Regulador Rectificador Universal 12V',categoria:'Eléctrico',marca:'Universal',modelo:'',precio:8.00,stock:35,stockMin:10,desc:'Regulador de voltaje universal 12V'},
+    {codigo:'ELE-004',nombre:'Bobina Encendido Honda XR150',categoria:'Eléctrico',marca:'Honda',modelo:'XR150L',precio:12.00,stock:18,stockMin:5,desc:'Bobina de alta tensión'},
+    {codigo:'ELE-005',nombre:'Bujía NGK CR7E (Honda/Yamaha)',categoria:'Eléctrico',marca:'Universal',modelo:'',precio:3.50,stock:60,stockMin:20,desc:'Bujía NGK CR7E universal'},
+    {codigo:'ELE-006',nombre:'Farol LED H4 30W Universal',categoria:'Eléctrico',marca:'Universal',modelo:'',precio:11.00,stock:25,stockMin:8,desc:'Farol LED H4 30W 6000K'},
+    {codigo:'ELE-007',nombre:'Batería 12V 5Ah YUASA',categoria:'Eléctrico',marca:'Universal',modelo:'',precio:28.00,stock:10,stockMin:3,desc:'Batería 12V 5Ah YUASA sellada'},
+    {codigo:'ELE-008',nombre:'Switch Manubrio Honda CG125',categoria:'Eléctrico',marca:'Honda',modelo:'CG125',precio:7.00,stock:15,stockMin:5,desc:'Switch completo de manubrio'},
+    // Frenos
+    {codigo:'FRE-001',nombre:'Balatas Delanteras Honda CG125',categoria:'Frenos',marca:'Honda',modelo:'CG125',precio:4.50,stock:40,stockMin:15,desc:'Balatas pastillas delanteras cerámicas'},
+    {codigo:'FRE-002',nombre:'Balatas Traseras Honda CG125',categoria:'Frenos',marca:'Honda',modelo:'CG125',precio:4.00,stock:35,stockMin:12,desc:'Balatas pastillas traseras'},
+    {codigo:'FRE-003',nombre:'Disco Delantero Honda CBR250',categoria:'Frenos',marca:'Honda',modelo:'CBR250R',precio:35.00,stock:5,stockMin:2,desc:'Disco de freno delantero 296mm'},
+    {codigo:'FRE-004',nombre:'Zapatas Freno Yamaha YBR125',categoria:'Frenos',marca:'Yamaha',modelo:'YBR125',precio:3.50,stock:45,stockMin:15,desc:'Zapatas de freno trasero'},
+    {codigo:'FRE-005',nombre:'Manguera Freno Universal 80cm',categoria:'Frenos',marca:'Universal',modelo:'',precio:5.00,stock:20,stockMin:5,desc:'Manguera de freno acero inoxidable'},
+    {codigo:'FRE-006',nombre:'Líquido Freno DOT4 500ml',categoria:'Frenos',marca:'Universal',modelo:'',precio:4.00,stock:30,stockMin:10,desc:'Líquido de frenos DOT4'},
+    // Suspensión
+    {codigo:'SUS-001',nombre:'Amortiguador Trasero Honda CG125',categoria:'Suspensión',marca:'Honda',modelo:'CG125',precio:18.00,stock:10,stockMin:3,desc:'Amortiguador trasero regulable'},
+    {codigo:'SUS-002',nombre:'Kit Sellos Horquilla Universal',categoria:'Suspensión',marca:'Universal',modelo:'',precio:6.00,stock:25,stockMin:8,desc:'Kit de sellos y retenes para horquilla'},
+    {codigo:'SUS-003',nombre:'Aceite Horquilla 10W 500ml',categoria:'Suspensión',marca:'Universal',modelo:'',precio:5.50,stock:20,stockMin:5,desc:'Aceite especial para horquilla'},
+    {codigo:'SUS-004',nombre:'Ruleman Dirección Honda XR150',categoria:'Suspensión',marca:'Honda',modelo:'XR150L',precio:12.00,stock:8,stockMin:3,desc:'Ruleman de dirección superior e inferior'},
+    // Llantas y Rin
+    {codigo:'LLA-001',nombre:'Llanta Delantera 2.75-18',categoria:'Llantas y Rin',marca:'Universal',modelo:'',precio:22.00,stock:15,stockMin:5,desc:'Llanta delantera 2.75-18'}
+    ,{codigo:'LLA-002',nombre:'Llanta Trasera 3.00-18',categoria:'Llantas y Rin',marca:'Universal',modelo:'',precio:25.00,stock:12,stockMin:4,desc:'Llanta trasera 3.00-18'},
+    {codigo:'LLA-003',nombre:'Llanta Trasera 110/80-17',categoria:'Llantas y Rin',marca:'Universal',modelo:'',precio:30.00,stock:8,stockMin:3,desc:'Llanta radial trasera deportiva'},
+    {codigo:'LLA-004',nombre:'Cámara 2.75-18',categoria:'Llantas y Rin',marca:'Universal',modelo:'',precio:5.00,stock:30,stockMin:10,desc:'Cámara de aire 2.75-18'},
+    {codigo:'LLA-005',nombre:'Rin Delantero 18" Aluminio',categoria:'Llantas y Rin',marca:'Universal',modelo:'',precio:35.00,stock:6,stockMin:2,desc:'Rin delantero 18 pulgadas aluminio'},
+    // Carrocería
+    {codigo:'CAR-001',nombre:'Guardafango Delantero Honda CG125',categoria:'Carrocería',marca:'Honda',modelo:'CG125',precio:8.00,stock:10,stockMin:3,desc:'Guardafango delantero plástico'},
+    {codigo:'CAR-002',nombre:'Tanque Gasolina Honda CG125',categoria:'Carrocería',marca:'Honda',modelo:'CG125',precio:45.00,stock:4,stockMin:2,desc:'Tanque de gasolina 13L con tapa'},
+    {codigo:'CAR-003',nombre:'Espejo Retrovisor Universal Izq',categoria:'Carrocería',marca:'Universal',modelo:'',precio:4.00,stock:30,stockMin:10,desc:'Espejo retrovisor izquierdo cromado'},
+    {codigo:'CAR-004',nombre:'Manubrio Honda XR150',categoria:'Carrocería',marca:'Honda',modelo:'XR150L',precio:15.00,stock:8,stockMin:3,desc:'Manubrio alto cross'},
+    {codigo:'CAR-005',nombre:'Asiento Honda CG125',categoria:'Carrocería',marca:'Honda',modelo:'CG125',precio:25.00,stock:5,stockMin:2,desc:'Asiento biposto con espuma'},
+    {codigo:'CAR-006',nombre:'Colín Suzuki GN125',categoria:'Carrocería',marca:'Suzuki',modelo:'GN125',precio:12.00,stock:7,stockMin:2,desc:'Colín trasero con luz'},
+    // Lubricantes y Filtros
+    {codigo:'LUB-001',nombre:'Aceite Motor 4T 10W40 1L',categoria:'Lubricantes y Filtros',marca:'Universal',modelo:'',precio:6.00,stock:50,stockMin:15,desc:'Aceite de motor 4T semi-sintético'},
+    {codigo:'LUB-002',nombre:'Aceite Motor 4T 20W50 1L',categoria:'Lubricantes y Filtros',marca:'Universal',modelo:'',precio:5.50,stock:40,stockMin:12,desc:'Aceite de motor 4T mineral'},
+    {codigo:'LUB-003',nombre:'Filtro Aceite Honda CG125',categoria:'Lubricantes y Filtros',marca:'Honda',modelo:'CG125',precio:3.50,stock:35,stockMin:10,desc:'Filtro de aceite original'},
+    {codigo:'LUB-004',nombre:'Filtro Aire Honda CG125',categoria:'Lubricantes y Filtros',marca:'Honda',modelo:'CG125',precio:4.00,stock:25,stockMin:8,desc:'Filtro de aire papel'},
+    {codigo:'LUB-005',nombre:'Grasa Multiuso 500g',categoria:'Lubricantes y Filtros',marca:'Universal',modelo:'',precio:4.50,stock:20,stockMin:5,desc:'Grasa multiuso de alta temperatura'},
+    // Cascos y Periquitos
+    {codigo:'PER-001',nombre:'Casco Integral Modular Negro M',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:35.00,stock:15,stockMin:5,desc:'Casco integral con visor flip-up'},
+    {codigo:'PER-002',nombre:'Casco Integral Modular Negro L',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:35.00,stock:12,stockMin:5,desc:'Casco integral talla L'},
+    {codigo:'PER-003',nombre:'Casco Modular Blanco XL',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:38.00,stock:8,stockMin:3,desc:'Casco integral blanco talla XL'},
+    {codigo:'PER-004',nombre:'Casco Jet Abierto Negro',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:18.00,stock:20,stockMin:6,desc:'Casco jet abierto clásico'},
+    {codigo:'PER-005',nombre:'Guantes de Cuero Negros',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:8.00,stock:25,stockMin:8,desc:'Guantes de cuero para motociclista'},
+    {codigo:'PER-006',nombre:'Candado U Antirrobo',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:12.00,stock:18,stockMin:5,desc:'Candado en U acero reforzado'},
+    {codigo:'PER-007',nombre:'Chaleco Refelectivo',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:6.00,stock:30,stockMin:10,desc:'Chaleco reflectivo para conductor'},
+    {codigo:'PER-008',nombre:'Gafas de Protección Polarizadas',categoria:'Cascos y Periquitos',marca:'Universal',modelo:'',precio:5.00,stock:25,stockMin:8,desc:'Gafas protectoras polarizadas'},
+    // Accesorios
+    {codigo:'ACC-001',nombre:'Soporte Celular Manubrio',categoria:'Accesorios',marca:'Universal',modelo:'',precio:7.00,stock:30,stockMin:10,desc:'Soporte 360° para celular en manubrio'},
+    {codigo:'ACC-002',nombre:'Baúl Traseero 45L',categoria:'Accesorios',marca:'Universal',modelo:'',precio:45.00,stock:6,stockMin:2,desc:'Baúl trasero 45 litros llave'},
+    {codigo:'ACC-003',nombre:'Farol LED Auxiliar 18W',categoria:'Accesorios',marca:'Universal',modelo:'',precio:9.00,stock:20,stockMin:6,desc:'Farol LED auxiliar para manubrio'},
+    {codigo:'ACC-004',nombre:'Claxon 12V 100dB',categoria:'Accesorios',marca:'Universal',modelo:'',precio:4.50,stock:25,stockMin:8,desc:'Claxon de doble tono 12V'},
+    {codigo:'ACC-005',nombre:'Protector Motor Aluminio',categoria:'Accesorios',marca:'Universal',modelo:'',precio:15.00,stock:10,stockMin:3,desc:'Protector de motor cromado'},
+    {codigo:'ACC-006',nombre:'Alarma Moto con Sirena',categoria:'Accesorios',marca:'Universal',modelo:'',precio:12.00,stock:15,stockMin:5,desc:'Alarma con control remoto y sirena 120dB'},
+    {codigo:'ACC-007',nombre:'Parabrisas Transparente Universal',categoria:'Accesorios',marca:'Universal',modelo:'',precio:18.00,stock:8,stockMin:3,desc:'Parabrisas acrílico transparente'},
+    {codigo:'ACC-008',nombre:'Localizador GPS Moto',categoria:'Accesorios',marca:'Universal',modelo:'',precio:35.00,stock:10,stockMin:3,desc:'GPS tracker con app y batería'},
+    // Herramientas
+    {codigo:'HER-001',nombre:'Llave Combo 8-24mm 8pc',categoria:'Herramientas',marca:'Universal',modelo:'',precio:15.00,stock:10,stockMin:3,desc:'Juego de llaves combo 8 piezas'},
+    {codigo:'HER-002',nombre:'Juego Llaves Allen 9pc',categoria:'Herramientas',marca:'Universal',modelo:'',precio:6.00,stock:20,stockMin:5,desc:'Llaves Allen bola 1.5-10mm'},
+    {codigo:'HER-003',nombre:'Torquímetro 10-60Nm',categoria:'Herramientas',marca:'Universal',modelo:'',precio:25.00,stock:5,stockMin:2,desc:'Torquímetro de clic 1/2"'},
+    {codigo:'HER-004',nombre:'Kit Herramientas Moto 38pc',categoria:'Herramientas',marca:'Universal',modelo:'',precio:40.00,stock:4,stockMin:2,desc:'Kit completo de herramientas para moto'},
+    {codigo:'HER-005',nombre:'Extractor Piñón Universal',categoria:'Herramientas',marca:'Universal',modelo:'',precio:8.00,stock:12,stockMin:4,desc:'Extractores de piñón ajustables'}
+  ];
+  prods.forEach(function(p){p.id=genId()+Math.random().toString(36).slice(2,4);});
+  setProductos(prods);
+
+  // Sample clients
+  var clientes=[
+    {id:genId()+'c1',nombre:'Carlos Rodríguez',telefono:'+58 412-5551234',email:'carlos@email.com',direccion:'Caracas, El Valle',notas:'Cliente frecuente Honda',ts:Date.now()},
+    {id:genId()+'c2',nombre:'María González',telefono:'+58 414-5555678',email:'',direccion:'Valencia, Carabobo',notas:'Prefiere Yamaha',ts:Date.now()},
+    {id:genId()+'c3',nombre:'José Martínez',telefono:'+58 416-5559012',email:'jose@email.com',direccion:'Maracaibo, Zulia',notas:'Taller pequeño',ts:Date.now()}
+  ];
+  setClientes(clientes);
+}
+
+// ═══════════════════════════════════════════
+// CANVAS POLYFILL
+// ═══════════════════════════════════════════
+if(!CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+    if(typeof r==='number')r={tl:r,tr:r,br:r,bl:r};
+    this.moveTo(x+r.tl,y);this.lineTo(x+w-r.tr,y);this.quadraticCurveTo(x+w,y,x+w,y+r.tr);
+    this.lineTo(x+w,y+h-r.br);this.quadraticCurveTo(x+w,y+h,x+w-r.br,y+h);
+    this.lineTo(x+r.bl,y+h);this.quadraticCurveTo(x,y+h,x,y+h-r.bl);
+    this.lineTo(x,y+r.tl);this.quadraticCurveTo(x,y,x+r.tl,y);
+    this.closePath();return this;
+  };
+}
+
+// ═══════════════════════════════════════════
+// INIT APP
+// ═══════════════════════════════════════════
+function initApp(){
+  cargarDatosEjemplo();
+  var cfg=getCfg();
+  gel('tasa-display').textContent=parseFloat(cfg.tasa).toFixed(2);
+  renderDashboard();
+}
+
+// ═══════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════
+_ironLockInit();
+</script>
+</body>
+</html>
