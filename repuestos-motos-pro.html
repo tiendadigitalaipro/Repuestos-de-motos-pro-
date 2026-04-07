@@ -1265,6 +1265,14 @@ function confirmarVenta(){
   var subtotal=0;_cart.forEach(function(c){subtotal+=c.precio*c.cantidad;});
   var desc=(parseFloat((gel('chk-descuento')||{}).value)||0)/100;
   var total=subtotal*(1-desc);
+  // Validar pago mixto: los montos deben cubrir el total
+  if(_selectedMetodo==='mixto'){
+    var usdMixto=parseFloat((gel('pay-mix-usd')||{}).value)||0;
+    var bsMixto=parseFloat((gel('pay-mix-bs')||{}).value)||0;
+    var tasaActual=getCfg().tasa||1;
+    var totalPagadoMixto=usdMixto+(bsMixto/tasaActual);
+    if(totalPagadoMixto<total-0.01){toast('❌ El monto ingresado no cubre el total de la venta','error');return;}
+  }
   var metodoInfo=METODOS_PAGO.find(function(m){return m.id===_selectedMetodo;});
   var venta={
     id:genId(),numero:String(getVentas().length+1).padStart(4,'0'),fecha:Date.now(),
@@ -1284,7 +1292,7 @@ function confirmarVenta(){
   // Registrar movimiento en caja
   var movs=getCajaMovs();movs.push({id:genId(),fecha:Date.now(),tipo:'ingreso',monto:total,concepto:'Venta #'+venta.numero,metodo:_selectedMetodo});setCajaMovs(movs);
 
-  _cart=[];renderCart();
+  _cart=[];_selectedMetodo='';renderCart();
   cerrarModal('modal-checkout');
   mostrarRecibo(venta);
   toast('✅ Venta registrada exitosamente','ok');
