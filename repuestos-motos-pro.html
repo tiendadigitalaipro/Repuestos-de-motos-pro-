@@ -305,7 +305,7 @@ table.data-table tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div class="form-group">
           <label class="form-label">CÓDIGO DE LICENCIA</label>
-          <input type="text" id="reg-lic" class="form-input mono" placeholder="RMP-PRO-XXXXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+          <input type="text" id="reg-lic" class="form-input mono" placeholder="ZYNC-PRO1-A2K0-2026 o RMP-PRO-XXXXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
         </div>
         <div class="divider"><span>o sin código</span></div>
         <button class="btn btn-secondary btn-block mb-8" onclick="usarDemoRegistro()">🎯 Prueba gratuita 5 días</button>
@@ -825,7 +825,7 @@ var MARCAS_MOTOS={
 // IRON LOCK v2 — REPUESTOS DE MOTOS PRO
 // ═══════════════════════════════════════════
 var _SIGN_SALT='RMPMOTOS2026';
-var MASTER_LICS=['RMP-PRO-DEMO-2024','RMP-PRO-A2K-2026','RMP-PRO-MAST-2026'];
+var MASTER_LICS=['RMP-PRO-DEMO-2024','RMP-PRO-A2K-2026','RMP-PRO-MAST-2026','ZYNC-PRO1-A2K0-2026','ZYNC-PRO2-ELEC-2026'];
 var _demoWatchdog=null;
 
 function _hash(s){var h=0;for(var i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;}return Math.abs(h).toString(36).toUpperCase();}
@@ -861,6 +861,7 @@ function _generarFirmadaDEMO(){
 function _verificarFirmada(code){
   var p=code.trim().toUpperCase();
   if(MASTER_LICS.indexOf(p)>=0)return{valid:true,tipo:'PRO',master:true};
+  if(p==='ZYNC-DEMO-2026-FREE')return{valid:true,tipo:'DEMO'};
   var mPRO=p.match(/^(RMP-PRO-([A-Z0-9]{6})-[A-Z0-9]{4})-([A-Z0-9]{4})$/);
   if(mPRO){
     var base=mPRO[1],embDevHash=mPRO[2],check=mPRO[3];
@@ -968,7 +969,7 @@ function iniciarSesion(){
   var saved=db.get('licencia_activa');
   if(!saved){
     if(msg){msg.style.color='var(--warn)';msg.innerHTML='⚠️ No hay licencia activa. Ingresa un código:<br>'
-      +'<input id="reactivar-lic" type="text" placeholder="RMP-PRO-... o RMP-DEMO-..." style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-family:var(--mono);font-size:12px;text-align:center;letter-spacing:1px" autocomplete="off" spellcheck="false">'
+      +'<input id="reactivar-lic" type="text" placeholder="ZYNC-PRO1-A2K0-2026 / ZYNC-PRO2-ELEC-2026 / ZYNC-DEMO-2026-FREE" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:var(--text);font-family:var(--mono);font-size:12px;text-align:center;letter-spacing:1px" autocomplete="off" spellcheck="false">'
       +'<button onclick="reactivarLicenciaLogin()" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:none;background:var(--orange);color:#fff;cursor:pointer;font-weight:700;font-size:13px">🔑 Activar</button>';}return;
   }
   if(saved.tipo==='DEMO'&&saved.expiry&&Date.now()>saved.expiry){db.remove('licencia_activa');return err('⏰ Tu período de prueba finalizó. Adquiere la licencia PRO.');}
@@ -988,10 +989,10 @@ function activarDemo(){
   var demoUsedKey='rmp_demo_used_'+getDeviceId().replace(/-/g,'');
   var demoUsed=_lsOK?localStorage.getItem(demoUsedKey):null;
   if(demoUsed){var exp=parseInt(demoUsed);if(Date.now()>exp){var msg=gel('reg-msg');if(msg)msg.innerHTML='<span style="color:var(--danger)">⏰ El período de prueba de este dispositivo ya finalizó.<br>Adquiere la licencia PRO.</span>';return;}
-    var lic={code:'RMP-DEMO-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:exp};db.set('licencia_activa',lic);_desbloquearApp(lic);return;}
+    var lic={code:'ZYNC-DEMO-2026-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:exp};db.set('licencia_activa',lic);_desbloquearApp(lic);return;}
   var expiry=Date.now()+5*24*60*60*1000;
   if(_lsOK)localStorage.setItem(demoUsedKey,String(expiry));
-  var lic={code:'RMP-DEMO-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:expiry};db.set('licencia_activa',lic);_desbloquearApp(lic);
+  var lic={code:'ZYNC-DEMO-2026-FREE',tipo:'DEMO',device:getDeviceId(),activado:Date.now(),expiry:expiry};db.set('licencia_activa',lic);_desbloquearApp(lic);
 }
 
 function _activarComoDemo(code){
